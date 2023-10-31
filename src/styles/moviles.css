@@ -1,5 +1,5 @@
 
-@media (max-width: 600px) {
+@media (max-width: 650px) {
     .labelsMenu {
       position: absolute;
       flex-direction: column;
@@ -11,7 +11,6 @@
   
     .labelVerMenu {
       display: flex;
-      /* flex-direction: column; */
       text-align: center;
       justify-content: center;
       align-items: center;
@@ -32,5 +31,8 @@
   
     .textAreaContainer {
       padding: 0;
+    }
+    .svg *{
+      color: #4f46e5;
     }
   }

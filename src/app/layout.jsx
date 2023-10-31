@@ -15,7 +15,6 @@ export default function RootLayout({ children }) {
     <html lang="es">
       <body>
         {children}
-        <footer>Molina - Corpache - Ayaviri - Colque.</footer>
       </body>
     </html>
   )

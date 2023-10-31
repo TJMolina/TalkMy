@@ -1,13 +1,25 @@
 'use client'
+// librerias
 import { useState, useEffect } from "react";
 import { v4 } from "uuid";
-import { leerArchivo } from "@/libs/manejarTexto";
-import { pauseReanudar } from "@/libs/reproductor";
-import InputArchivo from "@/componentes/inputArchivo";
-import { subirNotaABD, extraerTextoPagina } from "@/libs/manejarNotas";
 import { useRouter, useParams } from "next/navigation";
 import Script from "next/script";
+
+// mis scripts
+import { leerArchivo } from "@/libs/manejarTexto";
+import InputArchivo from "@/componentes/inputArchivo";
+import { subirNotaABD, extraerTextoPagina } from "@/libs/manejarNotas";
+import { pauseReanudar } from "@/libs/reproductor";
+
+// componentes
 import Container from "@/componentes/container";
+import Header from "@/componentes/header";
+import Link from "next/link";
+import Footer from "@/componentes/footer";
+
+// iconos
+import { AiOutlineBars, AiOutlineArrowLeft, AiOutlineCloud } from 'react-icons/ai';
+import { MdGTranslate } from 'react-icons/md'
 
 export default function Leer() {
   const [clikeado, seTclikeado] = useState(null);
@@ -45,7 +57,6 @@ export default function Leer() {
       //si esta editando una nota
       if (params.id) {
         const index = notas.findIndex(item => item.id === params.id);
-        console.log(index)
         if (index !== -1) {
           notas[index].nota = notaIndividual;
           localStorage.setItem("notas", JSON.stringify(notas));
@@ -71,27 +82,26 @@ export default function Leer() {
 
   return (
     <Container>
-      <header className="header">
-        <h1>TalkMy!</h1>
+      <Header>
         <div className="contenedorLabels">
-          <label onClick={crearNota} className="label">
-            ↖️
-          </label>
+          <Link href="/" onClick={crearNota} className="label">
+           <AiOutlineArrowLeft />
+          </Link>
           <div className="contenedorLabels labelsMenu">
-            <label onClick={(e) => e.target.parentElement.classList.toggle('ver')} className="label labelVerMenu">
-              :
+            <label onClick={(e) => e.currentTarget.parentElement.classList.toggle('ver')} className="label labelVerMenu">
+              <AiOutlineBars />
             </label>
             <label onClick={cerrarModal} className="label">
-              🌐
+              <AiOutlineCloud className="svg" />
             </label>
-            <label className="label botonTraducir" onClick={cambiarIdioma}
-            >
-              🈳
-            </label>
+              
+              <label className="label botonTraducir" onClick={cambiarIdioma}>
+                <MdGTranslate className="svg" />
+              </label>
             <InputArchivo leerArchivoDelInput={(e) => leerArchivo(e)} />
           </div>
         </div>
-      </header>
+      </Header>
 
       <main>
         <div id="IrVentanaFlotante" className="modal">
@@ -138,9 +148,9 @@ export default function Leer() {
           />
         </div>
         {/* <Script src='/traductor.js' /> */}
-        <Script src={`/pdfLib/pdf.js`} />
-
+        <Script src='/pdfLib/pdf.js' />
       </main>
+      <Footer />
     </Container>
   );
 }

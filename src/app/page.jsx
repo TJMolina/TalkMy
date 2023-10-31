@@ -1,12 +1,13 @@
 'use client'
 import { useState, useEffect } from "react";
-import Script from 'next/script';
 import Link from "next/link";
 import Nota from "@/componentes/cardNota";
 import { recibirNotasExistentes, eliminarNotaDeBD, obtenerNotasLocales } from '@/libs/manejarNotas';
 import Image from 'next/image';
 import Container from "@/componentes/container";
-
+import Header from "@/componentes/header";
+import Footer from "@/componentes/footer";
+import {AiOutlineUserAdd} from 'react-icons/ai'
 export default function Home() {
   const [logueado, setLogueado] = useState(false);
   const [notas, setNotas] = useState(obtenerNotasLocales());
@@ -29,15 +30,14 @@ export default function Home() {
 
   return (
     <Container>
-      <header className="header">
-        <h1>TalkMy!</h1>
+      <Header>
         {
           logueado ?
             <Image src='/logout.png' width={35} height={40} alt='logOut' onClick={cerrarSecion} style={{ cursor: 'pointer' }} />
             :
-            <Link href="/Formulario" ><Image src='/login.png' width={35} height={40} alt='LogIn' /></Link>
+            <Link href="/Formulario" ><AiOutlineUserAdd style={{fontSize: '2.5rem'}} /></Link>
         }
-      </header>
+      </Header>
       <main>
         <div className="notas">
           {notas.length > 0 ?
@@ -49,8 +49,8 @@ export default function Home() {
           }
         </div>
         <Link href='/Nota/Crear' className='nuevaNotaBoton'>✚</Link>
-        <Script src='./pdfLib/pdf.js' />
       </main>
+      <Footer />
     </Container>
   );
 }

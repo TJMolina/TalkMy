@@ -1,6 +1,10 @@
 'use client'
 import { iniciar, registrarse } from "@/libs/login-register";
 import { useEffect } from "react";
+import Container from "@/componentes/container";
+import Header from "@/componentes/header";
+import Link from "next/link";
+import Footer from "@/componentes/footer";
 const LoginPage = () => {
   useEffect(() => {
     const wrapper = document.querySelector(".wrapper");
@@ -15,11 +19,9 @@ const LoginPage = () => {
   }, []);
 
   return (
-    <>
-      <main className="container">
-      <header className="header">
-        <h1>TalkMy!</h1>
-      </header>
+    <Container>
+      <Header><Link href="/" className="label">↖️</Link></Header>
+      <main>
         <div className="wrapper">
           <div className="loginbox">
             <form onSubmit={iniciar}>
@@ -101,17 +103,9 @@ const LoginPage = () => {
             </form>
           </div>
         </div>
-        <div></div>
       </main>
-      <style jsx>{`
-        .container {
-          display: inline-flex;
-          backdrop-filter: blur(20px);
-          width: 100%;
-          justify-content: space-between;
-        }
-      `}</style>
-    </>
+      <Footer />
+    </Container>
   );
 };
 
