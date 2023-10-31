@@ -1,4 +1,10 @@
 /* Formularios */
+:root{
+  --fuente-letra-form: #2563eb;
+}
+label{
+  color: var(--fuente-letra-form);
+}
 .wrapper {
     position: relative;
     display: flex;
@@ -9,7 +15,7 @@
     border: 2px solid rgba(255, 255, 255, .2);
     background-color: rgba(0, 132, 255, 0.692);
     box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-    color: #fff;
+    color: var(--fuente-letra-form);
     border-radius: 10px;
     padding: 1rem;
     text-align: center;
@@ -20,8 +26,7 @@
   .wrapper .inputbox {
     margin: 1rem 0;
     padding: 1rem;
-    border: 2px solid rgba(255, 255, 255, 2);
-    border-radius: 45px;
+    border-bottom: 2px solid var(--fuente-letra-form);
   }
   
   .wrapper .loginbox {
@@ -52,7 +57,7 @@
     border: none;
     outline: none;
     font-size: 1rem;
-    color: #fff;
+    color: var(--fuente-letra-form);
   }
   
   

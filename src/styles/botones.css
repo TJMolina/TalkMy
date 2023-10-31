@@ -50,10 +50,6 @@
   transition: all .4s;
 }
 
-.borrarEstaNota:hover {
-  background-color: #ff2200;
-}
-
 /* Contenedor de boton play y clearbutton */
 .botonesContainer {
   position: sticky;
