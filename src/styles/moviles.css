@@ -1,0 +1,36 @@
+
+@media (max-width: 600px) {
+    .labelsMenu {
+      position: absolute;
+      flex-direction: column;
+      width: 4rem;
+      height: 4rem;
+      overflow: hidden;
+      transition: all .4s;
+    }
+  
+    .labelVerMenu {
+      display: flex;
+      /* flex-direction: column; */
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .contenedorLabels {
+      max-width: 8rem;
+    }
+  
+    .ContenedorNotaIndividual {
+      width: 100%;
+    }
+  
+    .contenidoArchivo:focus {
+      outline: none;
+      border: none;
+    }
+  
+    .textAreaContainer {
+      padding: 0;
+    }
+  }

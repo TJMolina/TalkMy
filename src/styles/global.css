@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+a,
+label,
+button,
+input[type='button'] {
+  cursor: pointer;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+}
+
+/* Header */
+.header {
+  width: 100%;
+  background-image: var(--color-logo);
+  color: var(--fuente-letra);
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+main {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+}
+
+/* Footer */
+footer {
+  position: relative;
+  background-image: var(--color-logo);
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+/* Parrafo resaltado de la pagina Nota */
+.parrafoEnfocadoRemarcado {
+  background-color: #59b4df;
+  color: var(--fuente-letra);
+}
+
+/* Ocultar el boton del traductor de google */
+.goog-te-gadget-simple,
+#google_translate_element {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  z-index: 50;
+  visibility: hidden;
+}
+
+
+/* Modal flotante para ingresar link de una pagina */
+/* Contenedor del formulario */
+.modal {
+  background-color: rgba(0, 0, 0, .8);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 1s;
+  z-index: 100;
+}
+
+.ver {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* formulario */
+.ventana {
+  position: relative;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%);
+  background-color: var(--fuente-letra);
+  max-width: 300px;
+  padding: 10px;
+}
+
+/*input para extraer texto de pagina web */
+.ventana form {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.ventana input,
+.ventana button {
+  padding: 5px;
+}
+
+.ventana button {
+  color: var(--fuente-letra);
+  background-image: var(--color-logo);
+}

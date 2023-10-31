@@ -1,0 +1,28 @@
+
+/* Contenedor de labels */
+.contenedorLabels {
+    width: 100%;
+    max-width: 16rem;
+    display: inline;
+  }
+  
+  /* Botones de back y file */
+  .label {
+    display: inline-flex;
+    width: 100%;
+    max-width: 4rem;
+    height: 4rem;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: xx-large;
+    transition: background-color .2s ease;
+  }
+  
+  .labelsMenu.ver {
+    height: 500px;
+  }
+  
+  .labelVerMenu {
+    display: none;
+  }

@@ -1,0 +1,15 @@
+/* Al hacer hover sobre algun boton */
+.label:hover,
+.clear-button:hover,
+.nuevaNotaBoton:hover,
+.botonPlay:hover {
+  background-color: #0056b3;
+}
+.notas:empty::before {
+  content: "Todavia no hay notas...";
+  color: gray;
+}
+
+.inputbox input::placeholder {
+  color: #fff;
+}

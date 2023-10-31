@@ -1,0 +1,65 @@
+/* Botones circulares */
+.botonPlay,
+.clear-button,
+.nuevaNotaBoton {
+  width: 4rem;
+  height: 4rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+  border-radius: 100%;
+  background-image: var(--color-logo);
+  color: var(--fuente-letra);
+  transition: background-color 0.2s ease, border 0.2s ease;
+}
+
+/* Boton de borrar texto */
+.clear-button {
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.8rem;
+  position: relative;
+  left: 3rem;
+  bottom: 0.1rem;
+}
+
+/* Boton de crear nota */
+.nuevaNotaBoton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  position: sticky;
+  margin-bottom: 10px;
+  bottom: 10px;
+  border: 1px solid rgb(86, 69, 185);
+}
+
+/* Boton de borrar nota */
+.borrarEstaNota {
+  float: right;
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0 0px 10px;
+  background-color: #ff5b42;
+  border-color: black;
+  color: var(--fuente-letra);
+  border-radius: 5px;
+  z-index: 100;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all .4s;
+}
+
+.borrarEstaNota:hover {
+  background-color: #ff2200;
+}
+
+/* Contenedor de boton play y clearbutton */
+.botonesContainer {
+  position: sticky;
+  bottom: 10px;
+  background-color: none;
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0 10px 0;
+}

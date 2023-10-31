@@ -1,0 +1,33 @@
+/* Contenedor del area de texto editable */
+.textAreaContainer {
+    padding: 1rem;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    box-sizing: border-box;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  /* Area de texto editable */
+  .contenidoArchivo {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 3px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    font-family: Arial, Helvetica, sans-serif;
+    color: black;
+    flex: 1;
+  }
+  
+  .contenidoArchivo:empty::before {
+    content: "Escribe aquí...";
+    color: gray;
+  }
+  
+  .contenidoArchivo p,
+  .ContenedorNotaIndividual p {
+    margin-top: 0;
+    display: inline;
+  }

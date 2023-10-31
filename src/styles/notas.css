@@ -1,0 +1,28 @@
+/* Contenedor de todas las notas */
+.notas {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  
+  
+  /* Contenedor de una nota individual */
+  .ContenedorNotaIndividual {
+    position: relative;
+    width: 300px;
+    height: 100px;
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    overflow: hidden;
+    user-select: none;
+    word-wrap: break-word;
+  }
+  
+  .ContenedorNotaIndividual p {
+    margin: 0;
+  }
