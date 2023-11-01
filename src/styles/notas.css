@@ -3,12 +3,11 @@
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    flex-direction: row;
     justify-content: center;
   }
-  
+   /*
   /* Contenedor de una nota individual */
-  .ContenedorNotaIndividual {
+  /* .ContenedorNotaIndividual {
     position: relative;
     display: flex;
     width: 300px;
@@ -28,4 +27,70 @@
   
   .ContenedorNotaIndividual p {
     margin: 0;
+  } */
+
+  .tarjeta {
+    transition: all .2s;
+    font-size: 16px;
+    border: 1px solid #b4b4b4;
+    border-radius: 5px;
+    width: 95%;
+    max-width: 300px;
+    margin: 15px 0;
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-areas: "nota-encabezado acciones" "nota-cuerpo acciones" "nota-pie acciones";
   }
+.tarjeta *{
+  color: black;
+}
+.tarjeta__contenido-encabezado {
+  grid-area: nota-encabezado;
+  font-size: calc(1em + 4px);
+  font-weight: 600;
+  margin: 10px 12px;
+  word-wrap: break-word;
+  white-space: pre-line;
+}
+.tarjeta__contenido-cuerpo {
+  grid-area: nota-cuerpo;
+  font-size: 1em;
+  margin: 6px 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.tarjeta__contenido-pie {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  grid-area: nota-pie;
+  text-align: right;
+  font-size: calc(1em - 4px);
+  margin: 8px 12px;
+  word-break: break-all;
+}
+.tarjeta__acciones-editar, .tarjeta__acciones-eliminar {
+  height: 50%;
+  box-sizing: border-box;
+  width: 100%;
+  border-bottom: 1px solid #b4b4b4;
+}
+.tarjeta__acciones, .tarjeta__acciones-editar, .tarjeta__acciones-eliminar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.tarjeta__acciones {
+  border-left: 1px solid #b4b4b4;
+  grid-area: acciones;
+  text-align: center;
+}
+
+.tarjeta__acciones-editar:hover, .tarjeta__acciones-eliminar:hover {
+  background: #e2e2e2;
+  cursor: pointer;
+}

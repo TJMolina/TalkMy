@@ -1,3 +1,4 @@
+'use client';
 export const obtenerNotasLocales = () => localStorage.getItem('notas') ? JSON.parse(localStorage.getItem('notas')) : [];
 
 //   -----------------------------------------------------------------
@@ -74,12 +75,12 @@ export const extraerTextoPagina = async (url) => {
     fetch(`../api/webPage/${url}`)
     .then(e => e.json())
     .then(({data}) => {
-        //Limpiar todo el texto para mostrarlo correctamente en la pagina
         let texto = data
             .match(/<p\b[^<]*(?:(?!<\/p>)<[^<]*)*<\/p>|<li\b[^<]*(?:(?!<\/li>)<[^<]*)*<\/li>|<h1\b[^<]*(?:(?!<\/h1>)<[^<]*)*<\/h1>/g)
             .map(parrafo => {
                 parrafo = parrafo.replace(/(<([^>]+)>)/ig, '').match(/[^.]+[.]{0,1}/g);
-                return Array.isArray(parrafo) && parrafo.length > 1 ? parrafo.map(e => `<p>${e}</p>`).join('') : `<p>${parrafo}</p>`
+                console.log(parrafo);
+                return Array.isArray(parrafo) && parrafo.length > 1 ? parrafo.map(e => `<p>${e})</p>`).join('') : `<p>${e}</p>`
             }
             ).join('<br><br>');
         document.getElementById("contenido-archivo").innerHTML = texto;

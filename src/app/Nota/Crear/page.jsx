@@ -1,4 +1,4 @@
-'use client'
+"use client";
 // librerias
 import { useState, useEffect } from "react";
 import { v4 } from "uuid";
@@ -18,13 +18,21 @@ import Link from "next/link";
 import Footer from "@/componentes/footer";
 
 // iconos
-import { AiOutlineBars, AiOutlineArrowLeft, AiOutlineCloud } from 'react-icons/ai';
-import { MdGTranslate } from 'react-icons/md'
+import {
+  AiOutlineBars,
+  AiOutlineArrowLeft,
+  AiOutlineCloud,
+  AiOutlineCaretRight,
+} from "react-icons/ai";
+import { MdGTranslate } from "react-icons/md";
 
 export default function Leer() {
   const [clikeado, seTclikeado] = useState(null);
   const [isPlay, setIsplay] = useState(false);
-  const obtenerNotasLocales = () => localStorage.getItem("notas") ? JSON.parse(localStorage.getItem("notas")) : false;
+  const obtenerNotasLocales = () =>
+    localStorage.getItem("notas")
+      ? JSON.parse(localStorage.getItem("notas"))
+      : false;
   const textArea = () => document.getElementById("contenido-archivo");
   const borrarTexto = () => (textArea().innerText = "");
   const router = useRouter();
@@ -37,17 +45,24 @@ export default function Leer() {
     cerrarModal();
   };
 
-  const cerrarModal = () => document.getElementById("IrVentanaFlotante").classList.toggle("ver");
+  const cerrarModal = () =>
+    document.getElementById("IrVentanaFlotante").classList.toggle("ver");
 
-  const cambiarIdioma = () => document.querySelector("#google_translate_element > div a")?.click();
+  const cambiarIdioma = () =>
+    document.querySelector("#google_translate_element > div a")?.click();
 
   const crearNota = () => {
     isPlay && pauseReanudar(clikeado, setIsplay, isPlay, seTclikeado);
     //Si hay contenido en el textarea y si no clickeó el boton crear mas de una vez
     if (!creando && textArea().innerHTML) {
-      document.querySelector('.parrafoEnfocadoRemarcado')?.classList?.remove('parrafoEnfocadoRemarcado');
+      document
+        .querySelector(".parrafoEnfocadoRemarcado")
+        ?.classList?.remove("parrafoEnfocadoRemarcado");
       //limpiar un poco el html
-      const notaIndividual = textArea().innerHTML.replace(/<\/?font[^>]*>/ig, '');
+      const notaIndividual = textArea().innerHTML.replace(
+        /<\/?font[^>]*>/gi,
+        ""
+      );
 
       creando = true;
       //Obtener notas locales
@@ -56,16 +71,18 @@ export default function Leer() {
       let nota = [];
       //si esta editando una nota
       if (params.id) {
-        const index = notas.findIndex(item => item.id === params.id);
+        const index = notas.findIndex((item) => item.id === params.id);
         if (index !== -1) {
           notas[index].nota = notaIndividual;
           localStorage.setItem("notas", JSON.stringify(notas));
           subirNotaABD([params.id, notaIndividual]);
         }
-      }
-      else {
+      } else {
         nota = { id: v4(), nota: notaIndividual };
-        localStorage.setItem("notas", JSON.stringify(notas ? [nota, ...notas] : [nota]));
+        localStorage.setItem(
+          "notas",
+          JSON.stringify(notas ? [nota, ...notas] : [nota])
+        );
         subirNotaABD(nota);
       }
     }
@@ -75,7 +92,7 @@ export default function Leer() {
   useEffect(() => {
     if (params.id) {
       const notas = obtenerNotasLocales();
-      let texto = notas.find(objeto => objeto.id === params.id);
+      let texto = notas.find((objeto) => objeto.id === params.id);
       if (notas) textArea().innerHTML = texto.nota;
     }
   }, []);
@@ -85,19 +102,24 @@ export default function Leer() {
       <Header>
         <div className="contenedorLabels">
           <Link href="/" onClick={crearNota} className="label">
-           <AiOutlineArrowLeft />
+            <AiOutlineArrowLeft />
           </Link>
           <div className="contenedorLabels labelsMenu">
-            <label onClick={(e) => e.currentTarget.parentElement.classList.toggle('ver')} className="label labelVerMenu">
+            <label
+              onClick={(e) =>
+                e.currentTarget.parentElement.classList.toggle("ver")
+              }
+              className="label labelVerMenu"
+            >
               <AiOutlineBars />
             </label>
             <label onClick={cerrarModal} className="label">
               <AiOutlineCloud className="svg" />
             </label>
-              
-              <label className="label botonTraducir" onClick={cambiarIdioma}>
-                <MdGTranslate className="svg" />
-              </label>
+
+            <label className="label botonTraducir" onClick={cambiarIdioma}>
+              <MdGTranslate className="svg" />
+            </label>
             <InputArchivo leerArchivoDelInput={(e) => leerArchivo(e)} />
           </div>
         </div>
@@ -127,9 +149,9 @@ export default function Leer() {
             id="contenido-archivo"
             style={{ fontSize: `${1.5}rem` }}
             className={"contenidoArchivo"}
-            onClick={(e) => !isPlay && seTclikeado(e.target)}//clickea un parrafo especifico
-            translate="yes">
-          </div>
+            onClick={(e) => !isPlay && seTclikeado(e.target)} //clickea un parrafo especifico
+            translate="yes"
+          ></div>
         </div>
 
         <div className={"botonesContainer"}>
@@ -139,16 +161,21 @@ export default function Leer() {
             value={"🗑️"}
             className={"clear-button"}
           />
-          <input
-            onClick={() => pauseReanudar(clikeado, setIsplay, isPlay, seTclikeado)}
+          <button
+            onClick={() =>
+              pauseReanudar(clikeado, setIsplay, isPlay, seTclikeado)
+            }
             type="button"
-            value={isPlay ? "┃┃" : "▶"}
             className={"botonPlay"}
             id="play"
-          />
+          >
+            {
+              isPlay?"┃┃":<AiOutlineCaretRight />
+            }
+          </button>
         </div>
         {/* <Script src='/traductor.js' /> */}
-        <Script src='/pdfLib/pdf.js' />
+        <Script src="/pdfLib/pdf.js" />
       </main>
       <Footer />
     </Container>

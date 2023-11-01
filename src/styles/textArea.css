@@ -19,7 +19,7 @@
     font-family: Arial, Helvetica, sans-serif;
     flex: 1;
   }
-  .contenidoArchivo *{
+  .contenidoArchivo *, .contenidoArchivo{
     color: black;
   }
   
