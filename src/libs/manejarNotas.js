@@ -71,16 +71,11 @@ export const eliminarNotaDeBD = async (nota) => {
 export const extraerTextoPagina = async (url) => {
     const urlBuscar = new FormData();
     urlBuscar.append('url', url);
-    fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/extraerTextoPagina.php', {
-    // fetch('http://localhost/paginas/borrar//buscar.php', {
-    // fetch('http://localhost/paginas/extraerTextoPagina.php', {
-        method: "POST",
-        body: urlBuscar
-    })
-    .then(e => e.text())
-    .then(respuestaTraducida => {
+    fetch(`../api/webPage/${url}`)
+    .then(e => e.json())
+    .then(({data}) => {
         //Limpiar todo el texto para mostrarlo correctamente en la pagina
-        let texto = respuestaTraducida
+        let texto = data
             .match(/<p\b[^<]*(?:(?!<\/p>)<[^<]*)*<\/p>|<li\b[^<]*(?:(?!<\/li>)<[^<]*)*<\/li>|<h1\b[^<]*(?:(?!<\/h1>)<[^<]*)*<\/h1>/g)
             .map(parrafo => {
                 parrafo = parrafo.replace(/(<([^>]+)>)/ig, '').match(/[^.]+[.]{0,1}/g);

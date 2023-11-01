@@ -22,8 +22,8 @@
     word-wrap: break-word;
     justify-content: space-between;
   }
-  .ContenedorNotaIndividual a *{
-    color: black;
+  .ContenedorNotaIndividual a, .ContenedorNotaIndividual a *{
+    color: black !important;
   }
   
   .ContenedorNotaIndividual p {

@@ -17,8 +17,10 @@
     box-sizing: border-box;
     border: 1px solid #ccc;
     font-family: Arial, Helvetica, sans-serif;
-    color: black;
     flex: 1;
+  }
+  .contenidoArchivo *{
+    color: black;
   }
   
   .contenidoArchivo:empty::before {
