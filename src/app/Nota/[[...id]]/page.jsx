@@ -8,7 +8,11 @@ import Script from "next/script";
 // mis scripts
 import { leerArchivo } from "@/libs/manejarTexto";
 import InputArchivo from "@/componentes/inputArchivo";
-import { subirNotaABD, extraerTextoPagina } from "@/libs/manejarNotas";
+import {
+  subirNotaABD,
+  extraerTextoPagina,
+  textArea,
+} from "@/libs/manejarNotas";
 import { pauseReanudar } from "@/libs/reproductor";
 
 // componentes
@@ -33,7 +37,6 @@ export default function Leer() {
     localStorage.getItem("notas")
       ? JSON.parse(localStorage.getItem("notas"))
       : false;
-  const textArea = () => document.getElementById("contenido-archivo");
   const borrarTexto = () => (textArea().innerText = "");
   const router = useRouter();
   const params = useParams();
@@ -45,8 +48,7 @@ export default function Leer() {
     cerrarModal();
   };
 
-  const cerrarModal = () =>
-    document.getElementById("IrVentanaFlotante").classList.toggle("ver");
+  const cerrarModal = () => document.getElementById("IrVentanaFlotante").classList.toggle("ver");
 
   const cambiarIdioma = () =>
     document.querySelector("#google_translate_element > div a")?.click();
@@ -86,13 +88,13 @@ export default function Leer() {
         subirNotaABD(nota);
       }
     }
-    router.push("/");
+    router.back();
   };
 
   useEffect(() => {
     if (params.id) {
       const notas = obtenerNotasLocales();
-      let texto = notas.find((objeto) => objeto.id === params.id);
+      let texto = notas.find((objeto) => objeto.id === params.id[0]);
       if (notas) textArea().innerHTML = texto.nota;
     }
   }, []);
@@ -101,18 +103,11 @@ export default function Leer() {
     <Container>
       <Header>
         <div className="contenedorLabels">
-          <Link href="/" onClick={crearNota} className="label">
+          <div onClick={crearNota} className="label">
             <AiOutlineArrowLeft />
-          </Link>
-          <div className="contenedorLabels labelsMenu">
-            <label
-              onClick={(e) =>
-                e.currentTarget.parentElement.classList.toggle("ver")
-              }
-              className="label labelVerMenu"
-            >
-              <AiOutlineBars />
-            </label>
+          </div>
+
+          <div className="labelsMenu">
             <label onClick={cerrarModal} className="label">
               <AiOutlineCloud className="svg" />
             </label>
@@ -120,8 +115,17 @@ export default function Leer() {
             <label className="label botonTraducir" onClick={cambiarIdioma}>
               <MdGTranslate className="svg" />
             </label>
+
             <InputArchivo leerArchivoDelInput={(e) => leerArchivo(e)} />
           </div>
+          <label
+            onClick={(e) =>
+              document.querySelector('.labelsMenu').classList.toggle("ver")
+            }
+            className="label labelVerMenu"
+          >
+            <AiOutlineBars />
+          </label>
         </div>
       </Header>
 
@@ -169,9 +173,7 @@ export default function Leer() {
             className={"botonPlay"}
             id="play"
           >
-            {
-              isPlay?"┃┃":<AiOutlineCaretRight />
-            }
+            {isPlay ? "┃┃" : <AiOutlineCaretRight />}
           </button>
         </div>
         {/* <Script src='/traductor.js' /> */}

@@ -4,12 +4,14 @@
   width: 4rem;
   height: 4rem;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 2rem;
   border-radius: 100%;
   background-image: var(--color-logo);
   transition: background-color 0.2s ease, border 0.2s ease;
 }
-
+.botonPlay{
+  padding: 5px 0 0 3px;
+}
 /* Boton de borrar texto */
 .clear-button {
   width: 2rem;
@@ -62,5 +64,8 @@
   border: none;
   border-radius: 10px;
   text-align: center;
+  position: sticky;
+  bottom: 5px;
+  margin-bottom: 5px;
 }
 

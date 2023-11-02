@@ -3,7 +3,7 @@
   --fuente-letra-form: #2563eb;
 }
 .wrapper *{
-  color: var(--fuente-letra-form) ;
+  color: var(--fuente-letra-form);
 }
 .wrapper {
   margin: auto;
@@ -91,7 +91,6 @@
   
   .wrapper a {
     text-decoration: underline;
-    color: var(--fuente-letra);
   }
   
   #lock {

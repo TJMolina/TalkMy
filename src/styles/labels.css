@@ -1,25 +1,23 @@
 /* Contenedor de labels */
 .contenedorLabels {
-  width: 100%;
-  max-width: 16rem;
-  display: inline;
+  position: relative;
+  display: flex;
+  justify-content: end;
 }
 
 /* Botones de back y file */
-.label {
+.labelsMenu {
   display: inline-flex;
   width: 100%;
-  max-width: 4rem;
-  height: 4rem;
+  max-width: 13rem;
   border-radius: 10px;
   align-items: center;
   justify-content: center;
-  font-size: xx-large;
   transition: background-color 0.2s ease;
+  margin: 0 5px;
 }
-
-.labelsMenu.ver {
-  height: 500px;
+.contenedorLabels label{
+  margin: 0 5px;
 }
 
 .labelVerMenu {

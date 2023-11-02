@@ -1,26 +1,15 @@
 'use client'
+import '../../styles/formulario.css'
 import { iniciar, registrarse } from "@/libs/login-register";
-import { useEffect } from "react";
 import Container from "@/componentes/container";
 import Header from "@/componentes/header";
 import Link from "next/link";
 import Footer from "@/componentes/footer";
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 const LoginPage = () => {
-  useEffect(() => {
-    const wrapper = document.querySelector(".wrapper");
-    const loginLink = document.querySelector(".loginlink");
-    const registerLink = document.querySelector(".registerlink");
-    registerLink.addEventListener("click", () => {
-      wrapper.classList.add("active");
-    });
-    loginLink.addEventListener("click", () => {
-      wrapper.classList.remove("active");
-    });
-  }, []);
-
   return (
     <Container>
-      <Header><Link href="/" className="label">↖️</Link></Header>
+      <Header><Link href="/" className="label"><AiOutlineArrowLeft /></Link></Header>
       <main>
         <div className="wrapper">
           <div className="loginbox">
@@ -52,7 +41,7 @@ const LoginPage = () => {
               <div>
                 <p>
                   ¿No tenés cuenta?{" "}
-                  <a href="#" className="registerlink">
+                  <a href="#" className="registerlink" onClick={()=>document.querySelector(".wrapper").classList.add("active")}>
                     Register
                   </a>
                 </p>
@@ -92,7 +81,7 @@ const LoginPage = () => {
               <div>
                 <p>
                   ¿Tienes una cuenta?{" "}
-                  <a href="#" className="loginlink">
+                  <a href="#" className="loginlink" onClick={()=>document.querySelector(".wrapper").classList.remove("active")}>
                     login
                   </a>
                 </p>

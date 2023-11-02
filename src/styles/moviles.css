@@ -1,38 +1,20 @@
-
 @media (max-width: 650px) {
     .labelsMenu {
-      position: absolute;
-      flex-direction: column;
-      width: 4rem;
-      height: 4rem;
+      width: 0;
       overflow: hidden;
       transition: all .4s;
     }
-  
-    .labelVerMenu {
-      display: flex;
-      text-align: center;
-      justify-content: center;
-      align-items: center;
+    .labelsMenu.ver {
+      width: 5rem;
     }
-  
-    .contenedorLabels {
-      max-width: 8rem;
-    }
-  
-    .ContenedorNotaIndividual {
-      width: 100%;
-    }
-  
     .contenidoArchivo:focus {
       outline: none;
       border: none;
     }
-  
     .textAreaContainer {
       padding: 0;
     }
-    .svg *{
-      color: #4f46e5;
+    .labelVerMenu{
+      display: inline;
     }
   }
