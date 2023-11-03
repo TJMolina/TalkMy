@@ -66,13 +66,13 @@ export const extraerTextoPagina = async (url) => {
     try {
         const respuestaFetch = await fetch(`../api/webPage/${url}`);
         const respuesta = await respuestaFetch.json();
-        textArea().innerHTML = respuesta
-        .match(/<p\b[^<]*(?:(?!<\/p>)<[^<]*)*<\/p>|<li\b[^<]*(?:(?!<\/li>)<[^<]*)*<\/li>|<h1\b[^<]*(?:(?!<\/h1>)<[^<]*)*<\/h1>/g)
-        .map(parrafo => {
+        textArea().innerHTML = respuesta.data
+          .match(/<p\b[^<]*(?:(?!<\/p>)<[^<]*)*<\/p>|<li\b[^<]*(?:(?!<\/li>)<[^<]*)*<\/li>|<h1\b[^<]*(?:(?!<\/h1>)<[^<]*)*<\/h1>/g)
+          .map(parrafo => {
             parrafo = parrafo.replace(/(<([^>]+)>)/ig, '').match(/[^.]+[.]{0,1}/g);
-            return Array.isArray(parrafo) && parrafo.length > 1 ? parrafo.map(e => `<p>${e})</p>`).join('') : `<p>${e}</p>`
-        })
-        .join('<br><br>');
+            return Array.isArray(parrafo) && parrafo.length > 1 ? parrafo.map( e => `<p>${e}</p>`).join('') : `<p>${parrafo}</p>`;
+          })
+          .join('<br><br>');
     }
     catch (e) {
         console.log(e)
