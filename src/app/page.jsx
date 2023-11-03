@@ -16,10 +16,10 @@ import Footer from "@/componentes/footer";
 
 import {
   AiOutlineUserAdd,
-  AiTwotoneBulb,
   AiOutlineInfoCircle,
   AiOutlinePlus,
 } from "react-icons/ai";
+import ApagarLuz from "@/componentes/modoOscuroButton";
 
 export default function Home() {
   const [logueado, setLogueado] = useState(false);
@@ -31,7 +31,10 @@ export default function Home() {
   };
 
   const borrarEstaNota = (idBorrar) => {
-    setNotas(notas.filter((nota) => nota.id !== idBorrar));
+    document.getElementById(idBorrar)?.classList.add('borrar');
+    setTimeout(() => {
+      setNotas(notas.filter((nota) => nota.id !== idBorrar));
+      }, 198);
     eliminarNotaDeBD(idBorrar);
   };
 
@@ -62,13 +65,10 @@ export default function Home() {
                 )}
               </Link>
             </label>
-
-            <label className="label">
-              <AiTwotoneBulb />
-            </label>
             <label className="label">
               <AiOutlineInfoCircle />
             </label>
+            <ApagarLuz />
           </div>
         }
       </Header>
@@ -87,11 +87,9 @@ export default function Home() {
             <div>No hay notas.</div>
           )}
         </div>
-        <button className="boton boton--add">
-          <Link href={"/Nota"}>
-            <AiOutlinePlus style={{ marginRight: "5px" }} /> Agregar Nueva Nota
-          </Link>
-        </button>
+        <Link className="boton boton--add" href={"/Nota"}>
+          <AiOutlinePlus style={{ marginRight: "5px" }} /> Agregar Nueva Nota
+        </Link>
       </main>
       <Footer />
     </Container>

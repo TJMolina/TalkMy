@@ -1,9 +1,9 @@
-"use client";
+'use client';
 import Link from "next/link";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 const Nota = ({ nota, id, borrarEstaNota }) => {
   return (
-    <div className="tarjeta">
+    <div className="tarjeta" id={id}>
       <Link href={`/Nota/${id}`} className="tarjeta__contenido">
         <div className="tarjeta__contenido-encabezado">
           <p>Titulo</p>

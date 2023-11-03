@@ -1,4 +1,11 @@
-export const obtenerNotasLocales = () => localStorage.getItem('notas') ? JSON.parse(localStorage.getItem('notas')) : [];
+export const obtenerNotasLocales = () => {
+    try{
+        return localStorage.getItem('notas') ? JSON.parse(localStorage.getItem('notas')) : []
+    }
+    catch{
+        return [];
+    }
+};
 
 //   -----------------------------------------------------------------
 

@@ -29,6 +29,7 @@ import {
   AiOutlineCaretRight,
 } from "react-icons/ai";
 import { MdGTranslate } from "react-icons/md";
+import ApagarLuz from "@/componentes/modoOscuroButton";
 
 export default function Leer() {
   const [clikeado, seTclikeado] = useState(null);
@@ -126,6 +127,7 @@ export default function Leer() {
           >
             <AiOutlineBars />
           </label>
+          <ApagarLuz />
         </div>
       </Header>
 
@@ -163,14 +165,14 @@ export default function Leer() {
             onClick={borrarTexto}
             type="button"
             value={"🗑️"}
-            className={"clear-button"}
+            className={"boton-circular clear-button"}
           />
           <button
             onClick={() =>
               pauseReanudar(clikeado, setIsplay, isPlay, seTclikeado)
             }
             type="button"
-            className={"botonPlay"}
+            className={"botonPlay boton-circular"}
             id="play"
           >
             {isPlay ? "┃┃" : <AiOutlineCaretRight />}

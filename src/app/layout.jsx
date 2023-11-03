@@ -1,9 +1,8 @@
-import "@/styles/global.css";
 import "@/styles/variables.css";
+import "@/styles/global.css";
 import "@/styles/textArea.css";
 import "@/styles/botones.css";
 import "@/styles/labels.css";
-import "@/styles/pseudoclases.css";
 import "@/styles/notas.css";
 import "@/styles/moviles.css";
 export const metadata = {

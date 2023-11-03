@@ -20,7 +20,7 @@
     flex: 1;
   }
   .contenidoArchivo *, .contenidoArchivo{
-    color: black;
+    color: var(--fuente-letra-contrario);
   }
   
   .contenidoArchivo:empty::before {

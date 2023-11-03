@@ -1,1 +1,1 @@
-export default function Footer(){ return <footer>Molina - Corpache - Ayaviri - Colque.</footer>}
+export default function Footer(){ return <footer>Molina Tobias</footer>}

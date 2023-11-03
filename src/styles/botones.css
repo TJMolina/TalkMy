@@ -1,6 +1,6 @@
 /* Botones circulares */
-.botonPlay,
-.clear-button {
+.boton-circular{
+  color: var(--fuente-letra);
   width: 4rem;
   height: 4rem;
   font-weight: bold;
@@ -22,19 +22,6 @@
   bottom: 0.1rem;
 }
 
-/* Boton de crear nota */
-.nuevaNotaBoton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: sticky;
-  margin-top: auto;
-  margin-bottom: 10px;
-  bottom: 10px;
-  border: 1px solid rgb(86, 69, 185);
-  z-index: 300;
-}
-
 /* Contenedor de boton play y clearbutton */
 .botonesContainer {
   position: sticky;
@@ -44,17 +31,12 @@
   flex-direction: column;
   margin: 20px 0 10px 0;
 }
-
-.boton--add, .boton--add i {
-  color: #474747;
-}
-.boton--add a{
+.boton--add {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.boton--add {
   background: var(--color-logo);
+  color: var(--fuente-letra);
   cursor: pointer;
   font-size: 18px;
   font-weight: 500;

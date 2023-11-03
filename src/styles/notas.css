@@ -1,48 +1,28 @@
 /* Contenedor de todas las notas */
 .notas {
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-   /*
-  /* Contenedor de una nota individual */
-  /* .ContenedorNotaIndividual {
-    position: relative;
-    display: flex;
-    width: 300px;
-    height: 100px;
-    margin: 5px;
-    padding: 5px;
-    border: 2px solid gray;
-    border-radius: 5px;
-    overflow: hidden;
-    user-select: none;
-    word-wrap: break-word;
-    justify-content: space-between;
-  }
-  .ContenedorNotaIndividual a, .ContenedorNotaIndividual a *{
-    color: black !important;
-  }
-  
-  .ContenedorNotaIndividual p {
-    margin: 0;
-  } */
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: auto;
+  color: var(--fuente-letra-contrario);
+}
 
-  .tarjeta {
-    transition: all .2s;
-    font-size: 16px;
-    border: 1px solid #b4b4b4;
-    border-radius: 5px;
-    width: 95%;
-    max-width: 300px;
-    margin: 5px;
-    display: grid;
-    grid-template-columns: 80% 20%;
-    grid-template-areas: "nota-encabezado acciones" "nota-cuerpo acciones" "nota-pie acciones";
-  }
-.tarjeta *{
-  color: black;
+.tarjeta {
+  transition: all 0.2s;
+  font-size: 16px;
+  border: 1px solid #b4b4b4;
+  border-radius: 5px;
+  width: 95%;
+  max-width: 300px;
+  margin: 5px;
+  display: grid;
+  grid-template-columns: 80% 20%;
+  grid-template-areas: "nota-encabezado acciones" "nota-cuerpo acciones" "nota-pie acciones";
+}
+
+.tarjeta * {
+  color: var(--fuente-letra-contrario);
 }
 .tarjeta__contenido-encabezado {
   grid-area: nota-encabezado;
@@ -72,13 +52,16 @@
   margin: 8px 12px;
   word-break: break-all;
 }
-.tarjeta__acciones-editar, .tarjeta__acciones-eliminar {
+.tarjeta__acciones-editar,
+.tarjeta__acciones-eliminar {
   height: 50%;
   box-sizing: border-box;
   width: 100%;
   border-bottom: 1px solid #b4b4b4;
 }
-.tarjeta__acciones, .tarjeta__acciones-editar, .tarjeta__acciones-eliminar {
+.tarjeta__acciones,
+.tarjeta__acciones-editar,
+.tarjeta__acciones-eliminar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -91,7 +74,17 @@
   text-align: center;
 }
 
-.tarjeta__acciones-editar:hover, .tarjeta__acciones-eliminar:hover {
+.tarjeta__acciones-editar:hover *,
+.tarjeta__acciones-eliminar:hover * {
+  color: black;
+}
+
+.tarjeta__acciones-editar:hover,
+.tarjeta__acciones-eliminar:hover {
   background: #e2e2e2;
   cursor: pointer;
+}
+
+.borrar{
+  transform: scale(0);
 }

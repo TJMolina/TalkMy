@@ -11,7 +11,6 @@ export async function play(texto, parrafoClikeado, setIsplay, seTclikeado) {
             };
             utterance.onend = () => {
                 if (speechSynthesis.speaking === false) {
-                    //reiniciar el foco del parrafo clikeado y pausar boton
                     seTclikeado(false);
                     setIsplay(false);
                 }
@@ -46,24 +45,18 @@ export async function play(texto, parrafoClikeado, setIsplay, seTclikeado) {
         parrafos = elementosSiguientes;
     }
     //si el array tiene mas de un texto
-    if (parrafos.length > 1) {
-        await Promise.all(parrafos.filter(p => p.innerText && leerTexto(p)));
-    } else {
-        leerTexto(parrafos[0]);
-    }
+    parrafos.length > 1 ?
+        await Promise.all(parrafos.filter(p => p.innerText && leerTexto(p))) : leerTexto(parrafos[0]);
+
 }
 
 // -------------------------------------------------------------------
 
-//detectar si dar pausa o play a la nota de audio
 export function pauseReanudar(clickeado, setIsplay, isPlay, seTclikeado) {
-    //si esta pausado y no esta en play, continuar
     if (speechSynthesis.paused && !isPlay) speechSynthesis.resume();
-    //si esta hablando y esta en play, pausar
     else if (speechSynthesis.speaking && isPlay) speechSynthesis.cancel();
     else {
         const textarea = document.getElementById('contenido-archivo');
-        //si no hay texto en el contenedor, no hacer nada, de lo contrario play
         if (textarea.innerText.trim().length < 1) return;
         play(textarea, clickeado, setIsplay, seTclikeado);
     }
