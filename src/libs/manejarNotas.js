@@ -63,19 +63,21 @@ export const eliminarNotaDeBD = async (idBorrar) => {
 //   -----------------------------------------------------------------
 
 export const extraerTextoPagina = async (url) => {
+    const transformarTextoHtml = (txt)=>{
+        return txt
+        .match(/<p\b[^<]*(?:(?!<\/p>)<[^<]*)*<\/p>|<li\b[^<]*(?:(?!<\/li>)<[^<]*)*<\/li>|<h1\b[^<]*(?:(?!<\/h1>)<[^<]*)*<\/h1>/g)
+        .map(parrafo => {
+          parrafo = parrafo.replace(/(<([^>]+)>)/ig, '').match(/[^.]+[.]{0,1}/g);
+          return Array.isArray(parrafo) && parrafo.length > 1 ? parrafo.map( e => `<p>${e}</p>`).join('') : `<p>${parrafo}</p>`;
+        })
+        .join('<br><br>');
+    }
     try {
         const respuestaFetch = await fetch(`../api/webPage/${url}`);
         const respuesta = await respuestaFetch.json();
-        textArea().innerHTML = respuesta.data
-          .match(/<p\b[^<]*(?:(?!<\/p>)<[^<]*)*<\/p>|<li\b[^<]*(?:(?!<\/li>)<[^<]*)*<\/li>|<h1\b[^<]*(?:(?!<\/h1>)<[^<]*)*<\/h1>/g)
-          .map(parrafo => {
-            parrafo = parrafo.replace(/(<([^>]+)>)/ig, '').match(/[^.]+[.]{0,1}/g);
-            return Array.isArray(parrafo) && parrafo.length > 1 ? parrafo.map( e => `<p>${e}</p>`).join('') : `<p>${parrafo}</p>`;
-          })
-          .join('<br><br>');
+        textArea().innerHTML = transformarTextoHtml(respuesta.data);
     }
-    catch (e) {
-        console.log(e)
-        textArea().innerText = "Hubo algun error. Podria ser por un bloqueador en la pagina o mala conexion.";
+    catch {
+        console.log('cosas')
     }
 }

@@ -23,7 +23,7 @@ import ApagarLuz from "@/componentes/modoOscuroButton";
 
 export default function Home() {
   const [logueado, setLogueado] = useState(false);
-  const [notas, setNotas] = useState(obtenerNotasLocales());
+  const [notas, setNotas] = useState([]);
 
   const cerrarSecion = () => {
     localStorage.clear();
@@ -40,6 +40,7 @@ export default function Home() {
 
   useEffect(() => {
     //Mostrar todas las notas existentes en  la cuenta del usuario al iniciar la pagina
+    setNotas(obtenerNotasLocales());
     setLogueado(localStorage.getItem("contraseTalkMyAppUsuario"));
     if (logueado) recibirNotasExistentes(setNotas);
   }, []);
