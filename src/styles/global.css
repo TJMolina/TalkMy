@@ -49,7 +49,7 @@ p {
 header {
   width: 100%;
   z-index: 200;
-  font-size: calc(1em + 5px);
+  font-size: calc(1.2em + 5px);
   background-image: var(--color-logo);
   box-sizing: border-box;
   padding: .5rem !important;
@@ -81,7 +81,7 @@ main {
 footer {
   background-image: var(--color-logo);
   text-align: center;
-  padding: 1rem 0;
+  font-size: 1.3rem;
   color: var(--fuente-letra);
 }
 

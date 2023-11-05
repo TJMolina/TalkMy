@@ -1,14 +1,14 @@
 "use client";
+
 // librerias
 import { useState, useEffect } from "react";
 import { v4 } from "uuid";
-import { useRouter, useParams } from "next/navigation";
 import Script from "next/script";
 
 // mis scripts
 import { leerArchivo } from "@/libs/manejarTexto";
-import InputArchivo from "@/componentes/inputArchivo";
 import {
+  obtenerNotasLocales,
   subirNotaABD,
   extraerTextoPagina,
   textArea,
@@ -16,10 +16,9 @@ import {
 import { pauseReanudar } from "@/libs/reproductor";
 
 // componentes
-import Container from "@/componentes/container";
 import Header from "@/componentes/header";
-import Link from "next/link";
 import Footer from "@/componentes/footer";
+import InputArchivo from "@/componentes/inputArchivo";
 
 // iconos
 import {
@@ -31,16 +30,15 @@ import {
 import { MdGTranslate } from "react-icons/md";
 import ApagarLuz from "@/componentes/modoOscuroButton";
 
+//contexto
+import { useMain } from "../context/mainContext";
+import Link from "next/link";
+
 export default function Leer() {
   const [clikeado, seTclikeado] = useState(null);
   const [isPlay, setIsplay] = useState(false);
-  const obtenerNotasLocales = () =>
-    localStorage.getItem("notas")
-      ? JSON.parse(localStorage.getItem("notas"))
-      : false;
-  const borrarTexto = () => (textArea().innerText = "");
-  const router = useRouter();
-  const params = useParams();
+  //obtener estas variables y funciones del contexto con useMain
+  const { notas, setNotas, notaEditandoId, estaLogueado } = useMain();
   let creando = false;
 
   const extraerTexto = (e) => {
@@ -49,63 +47,54 @@ export default function Leer() {
     cerrarModal();
   };
 
-  const cerrarModal = () => document.getElementById("IrVentanaFlotante").classList.toggle("ver");
+  const cerrarModal = () =>
+    document.getElementById("IrVentanaFlotante").classList.toggle("ver");
 
-  const cambiarIdioma = () => document.querySelector("#google_translate_element > div a")?.click();
+  const cambiarIdioma = () =>
+    document.querySelector("#google_translate_element > div a")?.click();
 
   const crearNota = () => {
-    isPlay && pauseReanudar(clikeado, setIsplay, isPlay, seTclikeado);
-    //Si hay contenido en el textarea y si no clickeó el boton crear mas de una vez
+    if (isPlay) pauseReanudar(clikeado, setIsplay, isPlay, seTclikeado);
+
     if (!creando && textArea().innerHTML) {
-      document
-        .querySelector(".parrafoEnfocadoRemarcado")
-        ?.classList?.remove("parrafoEnfocadoRemarcado");
-      //limpiar un poco el html
-      const notaIndividual = textArea().innerHTML.replace(
-        /<\/?font[^>]*>/gi,
-        ""
-      );
+      document.querySelector(".parrafoEnfocadoRemarcado")?.classList?.remove("parrafoEnfocadoRemarcado");
+
+      const notaIndividual = textArea().innerHTML.replace(/<\/?font[^>]*>/gi,"");
 
       creando = true;
-      //Obtener notas locales
       let notas = obtenerNotasLocales();
 
-      let nota = [];
-      //si esta editando una nota
-      if (params.id) {
-        const index = notas.findIndex((item) => item.id === params.id);
+      if (notaEditandoId) {
+        const index = notas.findIndex((item) => item.id === notaEditandoId);
         if (index !== -1) {
           notas[index].nota = notaIndividual;
-          localStorage.setItem("notas", JSON.stringify(notas));
-          subirNotaABD([params.id, notaIndividual]);
+          if(estaLogueado)subirNotaABD([notaEditandoId, notaIndividual]);
         }
       } else {
-        nota = { id: v4(), nota: notaIndividual };
-        localStorage.setItem(
-          "notas",
-          JSON.stringify(notas ? [nota, ...notas] : [nota])
-        );
-        subirNotaABD(nota);
+        const nota = { id: v4(), nota: notaIndividual };
+        notas = notas ? [nota, ...notas] : [nota];
+        if(estaLogueado)subirNotaABD(nota);
       }
+
+      localStorage.setItem("notas", JSON.stringify(notas));
+      setNotas(notas);
     }
-    router.back();
   };
 
   useEffect(() => {
-    if (params.id) {
-      const notas = obtenerNotasLocales();
-      let texto = notas.find((objeto) => objeto.id === params.id[0]);
-      if (notas) textArea().innerHTML = texto.nota;
+    if (notaEditandoId) {
+      let texto = notas.find((objeto) => objeto.id === notaEditandoId);
+      textArea().innerHTML = texto.nota;
     }
   }, []);
 
   return (
-    <Container>
+    <>
       <Header>
         <div className="contenedorLabels">
-          <div onClick={crearNota} className="label">
+          <Link href={'/'} onClick={crearNota} className="label">
             <AiOutlineArrowLeft />
-          </div>
+          </Link>
 
           <div className="labelsMenu">
             <label onClick={cerrarModal} className="label">
@@ -120,7 +109,7 @@ export default function Leer() {
           </div>
           <label
             onClick={(e) =>
-              document.querySelector('.labelsMenu').classList.toggle("ver")
+              document.querySelector(".labelsMenu").classList.toggle("ver")
             }
             className="label labelVerMenu"
           >
@@ -130,7 +119,7 @@ export default function Leer() {
         </div>
       </Header>
 
-      <main>
+      <main translate="no">
         <div id="IrVentanaFlotante" className="modal">
           <div className="ventana">
             <a onClick={cerrarModal}>X</a>
@@ -161,7 +150,7 @@ export default function Leer() {
 
         <div className={"botonesContainer"}>
           <input
-            onClick={borrarTexto}
+            onClick={() => (textArea().innerText = "")}
             type="button"
             value={"🗑️"}
             className={"boton-circular clear-button"}
@@ -174,12 +163,12 @@ export default function Leer() {
             className={"botonPlay boton-circular"}
             id="play"
           >
-            {isPlay ?"┃┃":<AiOutlineCaretRight />}
+            {isPlay ? "┃┃" : <AiOutlineCaretRight />}
           </button>
         </div>
         <Script src="/pdfLib/pdf.js" />
       </main>
       <Footer />
-    </Container>
+    </>
   );
 }

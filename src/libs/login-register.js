@@ -25,3 +25,8 @@ export const registrarse = async (e)=>{
     if(respuestaTraducida == ' ok') window.location.href="./";
     else alert('Usuario ya existente.');
 }
+
+export const logOut = ()=>{
+    localStorage.clear();
+    window.location.reload();
+}

@@ -27,10 +27,12 @@
 .tarjeta__contenido-encabezado {
   grid-area: nota-encabezado;
   font-size: calc(1em + 4px);
+  max-height: calc(1em + 4px);
   font-weight: 600;
   margin: 10px 12px;
   word-wrap: break-word;
   white-space: pre-line;
+  overflow: hidden;
 }
 .tarjeta__contenido-cuerpo {
   grid-area: nota-cuerpo;

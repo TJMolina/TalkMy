@@ -25,6 +25,7 @@ const LoginPage = () => {
                   maxLength="25"
                   pattern="[A-Za-z0-9\s]+"
                   required
+
                 />
               </div>
               <div className="inputbox">
