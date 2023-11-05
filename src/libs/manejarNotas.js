@@ -77,7 +77,7 @@ export const extraerTextoPagina = async (url) => {
         const respuesta = await respuestaFetch.json();
         textArea().innerHTML = transformarTextoHtml(respuesta.data);
     }
-    catch {
-        console.log('cosas')
+    catch(e) {
+        console.log(e)
     }
 }

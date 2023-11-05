@@ -20,6 +20,7 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import ApagarLuz from "@/componentes/modoOscuroButton";
+import { getDownloads } from "./api/webPage/[...url]/route";
 
 export default function Home() {
   const [logueado, setLogueado] = useState(false);
@@ -37,8 +38,13 @@ export default function Home() {
       }, 198);
     eliminarNotaDeBD(idBorrar);
   };
+  const buscar = async ()=>{
+    const res = await fetch('/api/webPage/https://example.com');
+    console.log(res);
+  }
 
   useEffect(() => {
+    buscar();
     //Mostrar todas las notas existentes en  la cuenta del usuario al iniciar la pagina
     setNotas(obtenerNotasLocales());
     setLogueado(localStorage.getItem("contraseTalkMyAppUsuario"));
