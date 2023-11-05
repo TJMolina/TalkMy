@@ -5,7 +5,7 @@
       transition: all .4s;
     }
     .labelsMenu.ver {
-      width: 5rem;
+      width: 6rem;
     }
     .contenidoArchivo:focus {
       outline: none;

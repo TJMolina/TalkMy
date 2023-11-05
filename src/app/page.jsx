@@ -13,6 +13,7 @@ import {
   AiOutlineUserAdd,
   AiOutlineInfoCircle,
   AiOutlinePlus,
+  AiOutlineUserDelete,
 } from "react-icons/ai";
 
 //funciones
@@ -28,14 +29,7 @@ export default function Home() {
           <div className="contenedorLabels">
             <label className="label">
               {estaLogueado ? (
-                <Image
-                  src="/logout.png"
-                  width={25}
-                  height={30}
-                  alt="logOut"
-                  onClick={logOut}
-                  style={{ cursor: "pointer" }}
-                />
+                  <AiOutlineUserDelete onClick={logOut} />
               ) : (
                 <Link href="/Formulario">
                   <AiOutlineUserAdd />

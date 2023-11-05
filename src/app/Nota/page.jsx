@@ -23,9 +23,10 @@ import InputArchivo from "@/componentes/inputArchivo";
 // iconos
 import {
   AiOutlineBars,
-  AiOutlineArrowLeft,
   AiOutlineCloud,
   AiOutlineCaretRight,
+  AiOutlinePause,
+  AiOutlineSave,
 } from "react-icons/ai";
 import { MdGTranslate } from "react-icons/md";
 import ApagarLuz from "@/componentes/modoOscuroButton";
@@ -93,7 +94,7 @@ export default function Leer() {
       <Header>
         <div className="contenedorLabels">
           <Link href={'/'} onClick={crearNota} className="label">
-            <AiOutlineArrowLeft />
+            <AiOutlineSave />
           </Link>
 
           <div className="labelsMenu">
@@ -163,7 +164,7 @@ export default function Leer() {
             className={"botonPlay boton-circular"}
             id="play"
           >
-            {isPlay ? "┃┃" : <AiOutlineCaretRight />}
+            {isPlay ? <AiOutlinePause />: <AiOutlineCaretRight />}
           </button>
         </div>
         <Script src="/pdfLib/pdf.js" />
