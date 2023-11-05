@@ -72,12 +72,15 @@ export const extraerTextoPagina = async (url) => {
         })
         .join('<br><br>');
     }
+    const urlBuscar = new FormData();
+    urlBuscar.append('url', url);
     try {
-        const respuestaFetch = await fetch(`../api/webPage/${url}`);
-        const respuesta = await respuestaFetch.json();
-        textArea().innerHTML = transformarTextoHtml(respuesta.data);
+        const respuestaFetch = await fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/extraerTextoPagina.php',{method: "POST",body: urlBuscar});
+        const respuesta = await respuestaFetch.text();
+        textArea().innerHTML = transformarTextoHtml(respuesta);
     }
-    catch {
-        console.log('cosas')
+    catch(e) {
+        textArea().innerHTML = "<mark>Hubo algun error</mark>"
+        console.log(e);
     }
 }

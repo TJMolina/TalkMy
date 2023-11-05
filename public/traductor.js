@@ -207,7 +207,7 @@
         })();
 
   function googleTranslateElementInit(){
-    // const boton = document.querySelector('.botonTraducir');
+    const boton = document.querySelector('.botonTraducir');
     // if(boton)boton.style.display = 'inline-flex';
     // const contenedor = document.getElementById('google_translate_element');
     // if(contenedor.querySelector('div')) return;

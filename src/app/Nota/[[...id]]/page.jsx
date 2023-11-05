@@ -12,7 +12,7 @@ import {
   subirNotaABD,
   extraerTextoPagina,
   textArea,
-} from "@/libs/manejarNotas";
+} from "@/services/manejarNotas";
 import { pauseReanudar } from "@/libs/reproductor";
 
 // componentes
@@ -51,8 +51,7 @@ export default function Leer() {
 
   const cerrarModal = () => document.getElementById("IrVentanaFlotante").classList.toggle("ver");
 
-  const cambiarIdioma = () =>
-    document.querySelector("#google_translate_element > div a")?.click();
+  const cambiarIdioma = () => document.querySelector("#google_translate_element > div a")?.click();
 
   const crearNota = () => {
     isPlay && pauseReanudar(clikeado, setIsplay, isPlay, seTclikeado);
@@ -175,10 +174,9 @@ export default function Leer() {
             className={"botonPlay boton-circular"}
             id="play"
           >
-            {isPlay ? "┃┃" : <AiOutlineCaretRight />}
+            {isPlay ?"┃┃":<AiOutlineCaretRight />}
           </button>
         </div>
-        {/* <Script src='/traductor.js' /> */}
         <Script src="/pdfLib/pdf.js" />
       </main>
       <Footer />
