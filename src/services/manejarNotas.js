@@ -87,7 +87,7 @@ export const extraerTextoPagina = async (url) => {
             const respuestaFetchPHP = await fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/extraerTextoPagina.php', { method: "POST", body: urlBuscar });
             const respuestaPHP = await respuestaFetch.json();
             textArea().innerHTML = transformarTextoHtml(respuestaFetchPHP);
-        } catch (error) {
+        } catch (e) {
             textArea().innerHTML = "<mark>Hubo algun error</mark>"
             console.log(e);
         }
