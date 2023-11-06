@@ -12,8 +12,10 @@ export const GET = async (req, { params }) => {
             // headers: {
             //     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36'
             // },
-            transform: body => cheerio.load(body)
+            // transform: body => cheerio.load(body)
         });
+        return NextResponse.json(html);
+
         $('style, script, iframe, nav, header, footer, aside, button, select, dialog, noscript, svg, input').remove();
         $('body *').removeAttr('class').removeAttr('style').removeAttr('href');
         let html = $('body').html();
