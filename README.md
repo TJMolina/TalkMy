@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## TalkMy!
 
-## Getting Started
+TalkMy! es una innovadora aplicación web compatible con PWA que te permite leer y almacenar tus notas, ya sea texto adquirido de archivos, páginas web o simples palabras.
+- Puedes utilizar la demo de [TalkMy!](https://talkmy.netlify.app/) en tu navegador.
 
-First, run the development server:
+### Funcionalidades
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Escucha tus Notas**: ¿Preferirías escuchar tus notas en lugar de leerlas? Con TalkMy! puedes hacerlo con un simple clic.
+- **Almacenamiento en la Nube**: ¿Necesitas acceder a tus notas desde cualquier dispositivo? Regístrate e inicia sesión para almacenarlas en la nube.
+- **Gestión de Notas**: Crea y almacena cuantas notas desees en tu dispositivo local.
+- **Edición y Eliminación**: Modifica o elimina tus notas en cualquier momento, y si iniciaste sesión, los cambios se sincronizarán en la nube.
+- **Lectura de Frases**: Escucha frases específicas de tus notas simplemente seleccionándolas.
+- **Importación de Archivos**: Extrae texto de archivos PDF o TXT de manera sencilla con la función de importación.
+- **Sin Límites**: Escribe notas extensas sin preocupaciones; TalkMy! no tiene límite de caracteres.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Características
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Interfaz Sencilla**: Una interfaz de usuario intuitiva con un diseño atractivo para una experiencia de usuario cómoda.
+- **Poco Almacenamiento Requerido**: TalkMy! no requiere mucho espacio, así que no te preocupes por el almacenamiento.
+- **Compatibilidad Móvil y PC**: Utiliza TalkMy! en dispositivos móviles y de escritorio en cualquier lugar.
+- **Velocidad**: TalkMy! ofrece un procesamiento de datos rápido y transiciones de página fluidas.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Comenzando
 
-## Learn More
+Sigue estos pasos para empezar:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Instalar Dependencias**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   Ejecuta el siguiente comando para instalar todas las dependencias necesarias:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+2. **Iniciar el Servidor de Desarrollo**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   Inicia el servidor de desarrollo con el siguiente comando:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```bash
+   npm run dev
+   ```
+
+3. **Ver la Aplicación en tu Navegador**
+
+   Abre [http://localhost:3000](http://localhost:3000) en tu navegador para ver la aplicación en funcionamiento.
+
+Este proyecto se basa en [Next.js](https://nextjs.org/), y se ha generado con [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+¡Disfruta utilizando TalkMy! y descubre una nueva forma de gestionar tus notas!
