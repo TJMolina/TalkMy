@@ -72,20 +72,24 @@ export const extraerTextoPagina = async (url) => {
     try {
         const respuestaFetch = await fetch('/api/webPage/'+url);
         const respuesta = await respuestaFetch.json();
-        if(respuesta){
-            textArea().innerHTML = transformarTextoHtml(respuesta);
+        if(!respuesta){
+            throw new Error('no funciono la primera opcion');
         }
         else{
+            textArea().innerHTML = transformarTextoHtml(respuesta);
+        }
+    }
+    catch{
+        try {
             console.log('se requirisio usar php.');
             const urlBuscar = new FormData();
             urlBuscar.append('url', url);
             const respuestaFetchPHP = await fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/extraerTextoPagina.php', { method: "POST", body: urlBuscar });
             const respuestaPHP = await respuestaFetch.json();
             textArea().innerHTML = transformarTextoHtml(respuestaFetchPHP);
+        } catch (error) {
+            textArea().innerHTML = "<mark>Hubo algun error</mark>"
+            console.log(e);
         }
-    }
-    catch (e) {
-        textArea().innerHTML = "<mark>Hubo algun error</mark>"
-        console.log(e);
     }
 }
