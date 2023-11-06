@@ -69,17 +69,20 @@ export const extraerTextoPagina = async (url) => {
             })
             .join('<br><br>');
     }
-    const urlBuscar = new FormData();
-    urlBuscar.append('url', url);
     try {
-        // const respuestaFetch = await fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/extraerTextoPagina.php', { method: "POST", body: urlBuscar });
         const respuestaFetch = await fetch('/api/webPage/'+url);
-        const respuesta2 = await respuestaFetch.json();
-        console.log(respuesta2);
-
-
-        return
-        textArea().innerHTML = transformarTextoHtml(respuesta);
+        const respuesta = await respuestaFetch.json();
+        if(respuesta){
+            textArea().innerHTML = transformarTextoHtml(respuesta);
+        }
+        else{
+            console.log('se requirisio usar php.');
+            const urlBuscar = new FormData();
+            urlBuscar.append('url', url);
+            const respuestaFetchPHP = await fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/extraerTextoPagina.php', { method: "POST", body: urlBuscar });
+            const respuestaPHP = await respuestaFetch.json();
+            textArea().innerHTML = transformarTextoHtml(respuestaFetchPHP);
+        }
     }
     catch (e) {
         textArea().innerHTML = "<mark>Hubo algun error</mark>"
