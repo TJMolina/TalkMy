@@ -14,7 +14,7 @@ export const GET = async (req, { params }) => {
             // },
             // transform: body => cheerio.load(body)
         });
-        return NextResponse.json(html);
+        return NextResponse.json($.html());
 
         $('style, script, iframe, nav, header, footer, aside, button, select, dialog, noscript, svg, input').remove();
         $('body *').removeAttr('class').removeAttr('style').removeAttr('href');
