@@ -19,9 +19,13 @@ import {
 //funciones
 import { useMain } from "./context/mainContext";
 import { logOut } from "@/libs/login-register";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { estaLogueado, notas } = useMain();
+  const { estaLogueado, notas, setNotaId } = useMain();
+  useEffect(()=>{
+    setNotaId("");
+  },[]);
   return (
     <>
       <Header>

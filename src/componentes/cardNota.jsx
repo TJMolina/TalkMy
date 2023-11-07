@@ -1,4 +1,3 @@
-"use client";
 import { useMain } from "@/app/context/mainContext";
 import Link from "next/link";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
