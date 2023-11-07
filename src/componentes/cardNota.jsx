@@ -1,3 +1,4 @@
+"use client";
 import { useMain } from "@/app/context/mainContext";
 import Link from "next/link";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
@@ -7,7 +8,7 @@ const CardNota = ({ nota, id }) => {
     <div className="tarjeta" id={id}>
       <Link
         onClick={() => setNotaId(id)}
-        href={"/Nota"}
+        href="/Nota"
         className="tarjeta__contenido"
       >
         <div className="tarjeta__contenido-encabezado">

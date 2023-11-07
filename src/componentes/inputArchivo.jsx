@@ -1,3 +1,4 @@
+"use client";
 import {AiOutlineFolderOpen} from 'react-icons/ai'
 const InputArchivo = ({leerArchivoDelInput}) => {
   return (

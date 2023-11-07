@@ -1,6 +1,5 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import Script from "next/script";
 
 import {
   recibirNotasExistentes, //de la bd
@@ -49,8 +48,6 @@ export const MainProvider = ({ children }) => {
       }}
     >
       {children}
-      <Script src="/traductor.js" />
-      <div id="google_translate_element"></div>
     </MainContext.Provider>
   );
 };

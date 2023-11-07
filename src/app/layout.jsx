@@ -9,12 +9,7 @@ import Container from "@/componentes/container";
 import { MainProvider } from "./context/mainContext";
 export const metadata = {
   title: "TalkMy!",
-  description: "Leer texto app.",
-  manifest: "/manifest.json",
-  icons:{
-    apple: "/icons/icon.png"
-  },
-  themeColor: "#000000"
+  description: "Leer texto app."
 };
 export default function RootLayout({ children }) {
   return (

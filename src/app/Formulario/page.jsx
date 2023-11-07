@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import '../../styles/formulario.css'
 import { iniciar, registrarse } from "@/libs/login-register";
 import Container from "@/componentes/container";
@@ -8,7 +8,7 @@ import Footer from "@/componentes/footer";
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 const LoginPage = () => {
   return (
-    <Container>
+    <>
       <Header><Link href="/" className="label"><AiOutlineArrowLeft /></Link></Header>
       <main>
         <div className="wrapper">
@@ -42,7 +42,7 @@ const LoginPage = () => {
               <div>
                 <p>
                   ¿No tenés cuenta?{" "}
-                  <a href="#" className="registerlink" onClick={()=>document.querySelector(".wrapper").classList.add("active")}>
+                  <a href="#" className="registerlink" onClick={() => document.querySelector(".wrapper").classList.add("active")}>
                     Register
                   </a>
                 </p>
@@ -82,7 +82,7 @@ const LoginPage = () => {
               <div>
                 <p>
                   ¿Tienes una cuenta?{" "}
-                  <a href="#" className="loginlink" onClick={()=>document.querySelector(".wrapper").classList.remove("active")}>
+                  <a href="#" className="loginlink" onClick={() => document.querySelector(".wrapper").classList.remove("active")}>
                     login
                   </a>
                 </p>
@@ -95,7 +95,7 @@ const LoginPage = () => {
         </div>
       </main>
       <Footer />
-    </Container>
+    </>
   );
 };
 

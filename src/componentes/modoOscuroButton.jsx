@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { AiOutlineBulb, AiTwotoneBulb } from "react-icons/ai";
 export default function ApagarLuz() {
