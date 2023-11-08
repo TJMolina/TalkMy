@@ -1,14 +1,9 @@
-"use client";
-import { useState } from "react";
+import { useContext } from "react";
 import { AiOutlineBulb, AiTwotoneBulb } from "react-icons/ai";
 export default function ApagarLuz() {
-  const [prendido, setPrender] = useState(false);
-  const prender = () => {
-    document.querySelector("body").classList.toggle("oscuro");
-    setPrender(!prendido);
-  };
+  const { luzOnOff } = useContext();
   return (
-    <label className="label" onClick={prender}>
+    <label className="label" onClick={luzOnOff}>
       {prendido ? <AiTwotoneBulb /> : <AiOutlineBulb />}
     </label>
   );
