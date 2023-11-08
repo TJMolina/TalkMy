@@ -86,6 +86,8 @@ export default function Leer() {
     if (notaEditandoId) {
       let texto = notas.find((objeto) => objeto.id === notaEditandoId);
       textArea().innerHTML = texto.nota;
+    }else{
+      textArea().innerHTML = "";
     }
   }, []);
 

@@ -1,4 +1,3 @@
-"use client";
 import { useMain } from "@/app/context/mainContext";
 import Link from "next/link";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
@@ -12,7 +11,10 @@ const CardNota = ({ nota, id }) => {
         className="tarjeta__contenido"
       >
         <div className="tarjeta__contenido-encabezado">
-          <p>{nota.slice(3, 20).trim()}</p>
+          <p
+          //  dangerouslySetInnerHTML={{ __html: nota.slice(0, 50).replace(/<[^>]+>/g,'').trim() }}
+           dangerouslySetInnerHTML={{ __html: nota.split(/^<[^>]>[^<]<[^>]>/)[0].trim() }}
+          ></p>
         </div>
         <div
           className="tarjeta__contenido-cuerpo"

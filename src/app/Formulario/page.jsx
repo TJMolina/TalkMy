@@ -6,10 +6,16 @@ import Header from "@/componentes/header";
 import Link from "next/link";
 import Footer from "@/componentes/footer";
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import ApagarLuz from '@/componentes/modoOscuroButton';
 const LoginPage = () => {
   return (
     <>
-      <Header><Link href="/" className="label"><AiOutlineArrowLeft /></Link></Header>
+      <Header>
+        <div className="contenedorLabels">
+          <Link href="/" className="label"><AiOutlineArrowLeft /></Link>
+          <ApagarLuz />
+        </div>
+      </Header>
       <main>
         <div className="wrapper">
           <div className="loginbox">

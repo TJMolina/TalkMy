@@ -17,7 +17,8 @@ body {
 body.oscuro{
   background-color: #202020;
   --fuente-letra-contrario: white ;
-  --color-logo: linear-gradient(to right, #2720ac, #113583);
+  --fuente-letra-form: white ;
+  --color-logo:  #113583;
 }
 a {
   text-decoration: none;
@@ -49,8 +50,8 @@ p {
 header {
   width: 100%;
   z-index: 200;
-  font-size: calc(1.2em + 5px);
-  background-image: var(--color-logo);
+  font-size: calc(1.4em + 5px);
+  background: var(--color-logo);
   box-sizing: border-box;
   padding: .5rem !important;
   display: flex;
@@ -79,7 +80,7 @@ main {
 
 /* Footer */
 footer {
-  background-image: var(--color-logo);
+  background: var(--color-logo);
   text-align: center;
   font-size: 1.3rem;
   color: var(--fuente-letra);
@@ -144,5 +145,5 @@ footer {
 
 .ventana button {
   color: var(--fuente-letra);
-  background-image: var(--color-logo);
+  background: var(--color-logo);
 }

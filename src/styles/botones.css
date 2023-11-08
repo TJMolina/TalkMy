@@ -6,7 +6,7 @@
   font-weight: bold;
   font-size: 2rem;
   border-radius: 100%;
-  background-image: var(--color-logo);
+  background: var(--color-logo);
   transition: background-color 0.2s ease, border 0.2s ease;
 }
 .botonPlay{

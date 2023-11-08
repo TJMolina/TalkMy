@@ -1,10 +1,10 @@
-import { useContext } from "react";
+import { useMain } from "@/app/context/mainContext";
 import { AiOutlineBulb, AiTwotoneBulb } from "react-icons/ai";
 export default function ApagarLuz() {
-  const { luzOnOff } = useContext();
+  const { luzOnOff, modoOscuro } = useMain();
   return (
     <label className="label" onClick={luzOnOff}>
-      {prendido ? <AiTwotoneBulb /> : <AiOutlineBulb />}
+      {modoOscuro ? <AiTwotoneBulb /> : <AiOutlineBulb />}
     </label>
   );
 }

@@ -20,6 +20,12 @@ export const MainProvider = ({ children }) => {
   const [estaLogueado, setLogueado] = useState(false);
   const [notas, setNotas] = useState([]);
   const [notaEditandoId, setNotaId] = useState("");
+  const [modoOscuro, setModoOscuro] = useState(false);
+
+  const luzOnOff = ()=>{
+    document.querySelector("body").classList.toggle("oscuro");
+    setModoOscuro(!modoOscuro);
+  }
 
   const borrarEstaNota = (idBorrar) => {
     document.getElementById(idBorrar)?.classList.add("borrar");
@@ -45,6 +51,8 @@ export const MainProvider = ({ children }) => {
         borrarEstaNota,
         notaEditandoId,
         setNotaId,
+        luzOnOff,
+        modoOscuro
       }}
     >
       {children}
