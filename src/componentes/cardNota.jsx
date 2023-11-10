@@ -10,19 +10,13 @@ const CardNota = ({ nota, id }) => {
         href="/Nota"
         className="tarjeta__contenido"
       >
-        <div className="tarjeta__contenido-encabezado">
-          <p
-          //  dangerouslySetInnerHTML={{ __html: nota.slice(0, 50).replace(/<[^>]+>/g,'').trim() }}
-           dangerouslySetInnerHTML={{ __html: nota.split(/^<[^>]>[^<]<[^>]>/)[0].trim() }}
-          ></p>
-        </div>
         <div
           className="tarjeta__contenido-cuerpo"
-          dangerouslySetInnerHTML={{ __html: nota }}
+          dangerouslySetInnerHTML={{ __html: nota.slice(0,200) }}
         ></div>
-        <div className="tarjeta__contenido-pie ">
-          <p> 02:14pm </p>
-        </div>
+        <p className="tarjeta__contenido-pie ">
+          02:14pm
+        </p>
       </Link>
       <div className="tarjeta__acciones">
         <Link

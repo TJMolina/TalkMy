@@ -1,5 +1,7 @@
 //   -----------------------------------------------------------------
 
+import { ContentObject } from "../../public/pdfLib/pdf.worker";
+
 export const obtenerNotasLocales = () => localStorage.getItem('notas') ? JSON.parse(localStorage.getItem('notas')) : [];
 
 //   -----------------------------------------------------------------
@@ -47,7 +49,7 @@ export const eliminarNotaDeBD = async (idBorrar, estaLogueado) => {
     if (notasLocales) {
         localStorage.setItem('notas', JSON.stringify([...notasLocales.filter(item => item.id !== idBorrar)]));
     }
-    if(!estaLogueado) return;
+    if (!estaLogueado) return;
     const datos = new FormData();
     datos.append('nombre', localStorage.getItem('nombreTalkMyAppUsuario'));
     datos.append('contrase', localStorage.getItem('contraseTalkMyAppUsuario'));
@@ -61,25 +63,25 @@ export const eliminarNotaDeBD = async (idBorrar, estaLogueado) => {
 
 export const extraerTextoPagina = async (url) => {
     const transformarTextoHtml = (txt) => {
-        return txt
+        return txt.replace(/(\w+)="[^"]*"/g, '').replace(/<p><\/p>/g, '')
             .match(/<p\b[^<]*(?:(?!<\/p>)<[^<]*)*<\/p>|<li\b[^<]*(?:(?!<\/li>)<[^<]*)*<\/li>|<h1\b[^<]*(?:(?!<\/h1>)<[^<]*)*<\/h1>/g)
             .map(parrafo => {
-                parrafo = parrafo.replace(/(<([^>]+)>)/ig, '').match(/[^.]+[.]{0,1}/g);
+                parrafo = parrafo.replace(/<([^>])+>/g, '').match(/[^.]+[.]{0,1}/g);
                 return Array.isArray(parrafo) && parrafo.length > 1 ? parrafo.map(e => `<p>${e}</p>`).join('') : `<p>${parrafo}</p>`;
             })
             .join('<br><br>');
     }
     try {
-        const respuestaFetch = await fetch('/api/webPage/'+url);
+        const respuestaFetch = await fetch('/api/webPage/' + url);
         const respuesta = await respuestaFetch.json();
-        if(!respuesta){
+        if (!respuesta) {
             throw new Error('no funciono la primera opcion');
         }
-        else{
+        else {
             textArea().innerHTML = transformarTextoHtml(respuesta);
         }
     }
-    catch{
+    catch {
         try {
             console.log('se requirisio usar php.');
             const urlBuscar = new FormData();

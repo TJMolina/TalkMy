@@ -17,36 +17,39 @@
   margin: 5px;
   display: grid;
   grid-template-columns: 80% 20%;
-  grid-template-areas: "nota-encabezado acciones" "nota-cuerpo acciones" "nota-pie acciones";
+  grid-template-areas: "nota-cuerpo acciones" "nota-pie acciones";
   box-sizing: border-box;
 }
 
 .tarjeta * {
   color: var(--fuente-letra-contrario);
 }
-.tarjeta__contenido-encabezado {
-  grid-area: nota-encabezado;
-  font-size: 1em;
-  max-height: calc(1em + 4px);
-  font-weight: 600;
-  margin: 10px 12px;
-  word-wrap: break-word;
-  white-space: pre-line;
-  overflow: hidden;
+.tarjeta__contenido{
+  position: relative;
+  height: 7rem;
+  width: 100%;
+}
+.tarjeta__contenido-cuerpo::first-line{
+  font-size: 1rem;
+  font-weight: 500;
 }
 .tarjeta__contenido-cuerpo {
   grid-area: nota-cuerpo;
   font-size: .8em;
   margin: 6px 12px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  height: 1.5em;
+  height: 7em;
   text-wrap: wrap;
-}
+  overflow: hidden;
 
+}
+.tarjeta__contenido-cuerpo br{
+  display: none;
+}
 .tarjeta__contenido-pie {
   float: right;
+  position: absolute;
+  top: 75%;
+  left: 70%;
   display: flex;
   font-size: calc(1em - 4px);
   margin: 8px 12px;
