@@ -1,6 +1,5 @@
 //   -----------------------------------------------------------------
 
-import { ContentObject } from "../../public/pdfLib/pdf.worker";
 
 export const obtenerNotasLocales = () => localStorage.getItem('notas') ? JSON.parse(localStorage.getItem('notas')) : [];
 
@@ -14,8 +13,8 @@ export const subirNotaABD = async (nota) => {
     const datos = new FormData();
     datos.append('nombre', localStorage.getItem('nombreTalkMyAppUsuario'));
     datos.append('contrase', localStorage.getItem('contraseTalkMyAppUsuario'));
-    datos.append('id', nota[0]);
-    datos.append('texto', nota[1]);
+    datos.append('id', nota.id);
+    datos.append('texto', nota.nota);
     fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/subirNota.php', { method: "POST", body: datos })
         .catch(e => console.log(e));
 }
@@ -30,12 +29,16 @@ export const recibirNotasExistentes = async (setNotas, notas) => {
     try {
         const respuesta = await fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/recibirNotas.php', { method: "POST", body: datos });
         const respuestaTraducida = await respuesta.json();
-        if (notasRecibidas.length > 0) {
+        if (notasRecibidas[0]) {
             respuestaTraducida.forEach(nota => {
-                if (!notasRecibidas.some(arrX => arrX[0] === nota[0])) notasRecibidas.push(nota);
+                if (!notasRecibidas.some(arrX => arrX.id === nota[0])) notasRecibidas.push({id: nota[0], nota: nota[1]});
             });
-        } else if (Array.isArray(respuestaTraducida[0])) notasRecibidas.push(...respuestaTraducida);
+        } else if (Array.isArray(respuestaTraducida)&& respuestaTraducida[0])
+        {
+            [...respuestaTraducida].forEach(nota => notasRecibidas.push({id: nota[0], nota: nota[1]}));
+        }
         setNotas(notasRecibidas);
+        localStorage.setItem("notas", JSON.stringify(notasRecibidas));
     }
     catch (e) {
         console.log(e);

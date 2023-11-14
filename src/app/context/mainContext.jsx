@@ -35,11 +35,12 @@ export const MainProvider = ({ children }) => {
     }, 198);
   };
 
+  
   useEffect(() => {
     //Mostrar todas las notas existentes en  la cuenta del usuario al iniciar la pagina
     setNotas(obtenerNotasLocales());
     setLogueado(localStorage.getItem("contraseTalkMyAppUsuario"));
-    if (estaLogueado) recibirNotasExistentes(setNotas, notas);
+    if (localStorage.getItem("contraseTalkMyAppUsuario")) recibirNotasExistentes(setNotas, notas);
   }, []);
 
   return (
