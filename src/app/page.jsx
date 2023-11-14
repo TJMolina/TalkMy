@@ -1,6 +1,7 @@
 "use client";
 //librerias
 import Link from "next/link";
+import Image from "next/image";
 
 //componentes
 import Header from "@/componentes/header";
@@ -58,7 +59,10 @@ export default function Home() {
               />
             ))
           ) : (
-            <div>No hay notas.</div>
+            <div className="noHayNotas">
+            No hay notas.
+            <Image src={'/kuromi.png'} width={70} height={60} alt="No hay notas.." />
+            </div>
           )}
         </div>
         <Link className="boton boton--add" href="/Nota">

@@ -90,3 +90,11 @@
 .borrar{
   transform: scale(0);
 }
+
+.noHayNotas{
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+}
