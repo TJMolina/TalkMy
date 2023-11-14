@@ -90,7 +90,7 @@ footer {
 /* Parrafo resaltado de la pagina Nota */
 .parrafoEnfocadoRemarcado {
   background-color: #59b4df;
-  color: var(--fuente-letra);
+  color: var(--fuente-letra) !important;
 }
 
 /* Ocultar el boton del traductor de google */

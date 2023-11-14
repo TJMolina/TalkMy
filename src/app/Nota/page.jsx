@@ -57,7 +57,7 @@ export default function Leer() {
   const crearNota = () => {
     if (isPlay) pauseReanudar(clikeado, setIsplay, isPlay, seTclikeado);
 
-    if (!creando && textArea().innerHTML) {
+    if (!creando && textArea().innerText.trim()) {
       document.querySelector(".parrafoEnfocadoRemarcado")?.classList?.remove("parrafoEnfocadoRemarcado");
 
       const notaIndividual = textArea().innerHTML.replace(/<\/?font[^>]*>/gi,"");

@@ -12,7 +12,7 @@ const CardNota = ({ nota, id }) => {
       >
         <div
           className="tarjeta__contenido-cuerpo"
-          dangerouslySetInnerHTML={{ __html: nota.slice(0,500) }}
+          dangerouslySetInnerHTML={{ __html: nota.slice(0,1000) }}
         ></div>
         <p className="tarjeta__contenido-pie ">
           02:14pm
