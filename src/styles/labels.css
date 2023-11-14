@@ -2,7 +2,6 @@
 .contenedorLabels {
   position: relative;
   display: flex;
-  justify-content: end;
 }
 
 /* Botones de back y file */
