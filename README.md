@@ -1,7 +1,7 @@
 ## TalkMy!
 
 TalkMy! es una innovadora aplicación web compatible con PWA que te permite leer y almacenar tus notas, ya sea texto adquirido de archivos, páginas web o simples palabras.
-- Puedes utilizar la demo de [TalkMy!](https://talkmy.netlify.app/) en tu navegador.
+- Puedes utilizar la demo de [TalkMy!](https://talkmy.vercel.app/) en tu navegador.
 
 ### Funcionalidades
 
