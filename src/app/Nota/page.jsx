@@ -153,7 +153,7 @@ export default function Leer() {
         //cuando inicia a hablar
         utterance.onstart = () => {
           //desenmarco parrafos ya marcados
-          txt.querySelector(".parrafoEnfocadoRemarcado")?.classList.remove('parrafoEnfocadoRemarcado');
+          textArea().querySelector(".parrafoEnfocadoRemarcado")?.classList.remove('parrafoEnfocadoRemarcado');
           //resalto el elemento
           txt.classList.add("parrafoEnfocadoRemarcado");
 
@@ -166,6 +166,7 @@ export default function Leer() {
 
         //al finalizar de leer este elemento
         utterance.onend = () => {
+          txt.classList.remove('parrafoEnfocadoRemarcado');
           //cuando ya leyo todos los elementos
           if (speechSynthesis.speaking == false) {
             //desclikeo el ultimo elemento
@@ -339,7 +340,6 @@ export default function Leer() {
             style={{ fontSize: `${1.5}rem` }}
             className={"contenidoArchivo"}
             onClick={(e) => {
-              console.log("click", isPlay);
               if (!isPlay) {
                 seTclikeado(e.target);
               }
