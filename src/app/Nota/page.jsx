@@ -153,7 +153,7 @@ export default function Leer() {
         //cuando inicia a hablar
         utterance.onstart = () => {
           //desenmarco parrafos ya marcados
-          txt.querySelector(".parrafoEnfocadoRemarcado")?.remove();
+          txt.querySelector(".parrafoEnfocadoRemarcado")?.classList.remove('parrafoEnfocadoRemarcado');
           //resalto el elemento
           txt.classList.add("parrafoEnfocadoRemarcado");
 
