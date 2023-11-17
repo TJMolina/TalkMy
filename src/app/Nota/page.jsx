@@ -50,9 +50,7 @@ export default function Leer() {
   } = useMain();
 
   //una lista auxiliar ordenada de todas las notas que existen
-  const [notasSiguientes, setNotasSiguientes] = useState(
-    notas.slice().reverse()
-  );
+  const [notasSiguientes, setNotasSiguientes] = useState();
   //para evitar que cree la misma nota mas de una vez
   let creando = false;
 
@@ -153,7 +151,9 @@ export default function Leer() {
         //cuando inicia a hablar
         utterance.onstart = () => {
           //desenmarco parrafos ya marcados
-          textArea().querySelector(".parrafoEnfocadoRemarcado")?.classList.remove('parrafoEnfocadoRemarcado');
+          textArea()
+            .querySelector(".parrafoEnfocadoRemarcado")
+            ?.classList.remove("parrafoEnfocadoRemarcado");
           //resalto el elemento
           txt.classList.add("parrafoEnfocadoRemarcado");
 
@@ -166,7 +166,7 @@ export default function Leer() {
 
         //al finalizar de leer este elemento
         utterance.onend = () => {
-          txt.classList.remove('parrafoEnfocadoRemarcado');
+          txt.classList.remove("parrafoEnfocadoRemarcado");
           //cuando ya leyo todos los elementos
           if (speechSynthesis.speaking == false) {
             //desclikeo el ultimo elemento
@@ -267,14 +267,19 @@ export default function Leer() {
   useEffect(() => {
     //si detecta que esta editando una nota
     if (notaEditandoId) {
+      //hago un array auxiliar de las notas para modificarlo
+      let aux = notas.slice().reverse();
       //obtengo el indice de la nota siendo editada dentro del array auxiliar que contiene todas las notas ordenadas
-      const indice = notasSiguientes.findIndex((n) => n.id === notaEditandoId);
+      const indice = aux.findIndex((n) => n.id === notaEditandoId);
 
-      //cambio el texto del textarea por el de la nota siendo editada
-      textArea().innerHTML = notasSiguientes[indice].nota;
+      //borro todas las notas detras de la nota que voy a editar, para obtener todas las siguientes
+      aux.splice(0, indice);
 
-      //si el indice no es el primero, recorto todo lo que este detras de la nota editada, para hacer una lista de todas las notas que le sigan
-      if (indice > 0) setNotasSiguientes(notasSiguientes.splice(0, indice - 1));
+      // cambio el texto del textarea por el de la nota siendo editada
+      textArea().innerHTML = aux[0].nota;
+
+      //actualizo el array que almacenara todas las notas que le sigan a la que estoy editando
+      setNotasSiguientes(aux);
 
       //si no esta editando una nota, limpio el textarea del texto conservado de notas anteriores
     } else {
