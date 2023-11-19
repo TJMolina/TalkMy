@@ -21,12 +21,21 @@ import {
 import { useMain } from "./context/mainContext";
 import { logOut } from "@/libs/login-register";
 import { useEffect } from "react";
+import { obtenerNotasLocales, recibirNotasExistentes } from "@/services/manejarNotas";
 
 export default function Home() {
-  const { estaLogueado, notas, setNotaId } = useMain();
-  useEffect(()=>{
+  const { estaLogueado, notas, setNotas, setNotaId } = useMain();
+
+  //se ejecutara al renderizar el index
+  useEffect(() => {
     setNotaId("");
-  },[]);
+    //Mostrar todas las notas existentes en  la cuenta del usuario al iniciar la pagina
+    const notasAux = obtenerNotasLocales();
+    //verificare si esta logueado o no. si esta logueado, recibir notas de la bd
+    estaLogueado ? recibirNotasExistentes(setNotas, notasAux) : setNotas(notasAux);
+  }, []);
+
+  //----------------------------------------------------------------------------------
   return (
     <>
       <Header>
@@ -34,7 +43,7 @@ export default function Home() {
           <div className="contenedorLabels">
             <label className="label">
               {estaLogueado ? (
-                  <AiOutlineUserDelete onClick={logOut} />
+                <AiOutlineUserDelete onClick={logOut} />
               ) : (
                 <Link href="/Formulario">
                   <AiOutlineUserAdd />
@@ -51,16 +60,16 @@ export default function Home() {
       <main>
         <div className="notas">
           {notas.length > 0 ? (
-            notas.map((nota) => (
-              <CardNota
-                key={nota.id}
-                nota={nota}
-              />
-            ))
+            notas.map((nota) => <CardNota key={nota.id} nota={nota} />)
           ) : (
             <div className="noHayNotas">
-            No hay notas.
-            <Image src={'/kuromi.png'} width={70} height={60} alt="No hay notas.." />
+              No hay notas.
+              <Image
+                src={"/kuromi.png"}
+                width={70}
+                height={60}
+                alt="No hay notas.."
+              />
             </div>
           )}
         </div>
