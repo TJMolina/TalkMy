@@ -86,6 +86,21 @@ export default function Leer() {
     document.querySelector("#google_translate_element > div a")?.click();
 
   //------------------------------------------------------------
+  
+  //limpiar etiquetas y acomodar todo para un correcto funcionamiento
+   const limpiarTexto = (txt) => {
+    return txt
+      .split(/\n{3,}/)
+      .map((parrafo) =>
+        parrafo
+          .match(/[^.]+[.]{0,1}/g)
+          .map((oracion) => `<p>${oracion} </p>`)
+          .join("")
+      )
+      .join("<br><br>");
+  };
+
+  //------------------------------------------------------------
 
   const crearNota = () => {
     //si el boton esta en play, pausarlo y detener la lectura.
@@ -99,10 +114,11 @@ export default function Leer() {
         ?.classList?.remove("parrafoEnfocadoRemarcado");
 
       //borro todas las etiquetas font creadas por el traductor de google.
-      const notaIndividual = textArea().innerHTML.replace(
-        /<\/?font[^>]*>/gi,
-        ""
-      );
+      // const notaIndividual = textArea().innerHTML.replace(
+      //   /<\/?font[^>]*>/gi,
+      //   ""
+      // );
+      const notaIndividual = textArea().innerText.replace(/\n{3,}/gi, "\n\n\n");
 
       //inicio el proceso de crear
       creando = true;
@@ -120,7 +136,8 @@ export default function Leer() {
           //edito la nota dentro del array de notas
           notas[index].nota = notaIndividual;
           //si esta logueado, subo esta nota a la bd
-          if (estaLogueado) subirNotaABD({id: notaEditandoId, nota: notaIndividual});
+          if (estaLogueado)
+            subirNotaABD({ id: notaEditandoId, nota: notaIndividual });
         }
       }
       //si no esta editando una nota
@@ -250,7 +267,7 @@ export default function Leer() {
       //especificar que nota se esta leyendo actualmente en caso de que la edite
       setNotaId(notasSiguientes[0].id);
       //cambiar el texto del textarea por el de la nota actual
-      textArea().innerHTML = notasSiguientes[0].nota;
+      textArea().innerHTML = limpiarTexto(notasSiguientes[0].nota);
       //darle a leer, es asi para evitar ciertos bugs como el no reconocer el texto del textarea
       setTimeout(() => {
         play();
@@ -276,7 +293,7 @@ export default function Leer() {
       aux.splice(0, indice);
 
       // cambio el texto del textarea por el de la nota siendo editada
-      textArea().innerHTML = aux[0].nota;
+      textArea().innerHTML = limpiarTexto(aux[0].nota);
 
       //actualizo el array que almacenara todas las notas que le sigan a la que estoy editando
       setNotasSiguientes(aux);
