@@ -92,14 +92,10 @@ export default function Leer() {
   //limpiar etiquetas y acomodar todo para un correcto funcionamiento
   const limpiarTexto = (txt) => {
     return txt
-      .split(/\n{3,}/)
-      .map((parrafo) =>
-        parrafo
-          .match(/[^.]+[.]{0,1}/g)
-          .map((oracion) => `<p>${oracion} </p>`)
-          .join("")
-      )
-      .join("<br><br>");
+      .split(/(\r?\n){3,}/)//separamos en parrafos
+      .filter(part => part.trim() !== '')//borro los sobrantes
+      .map((parrafo) => parrafo.match(/[^.]+[.]{0,1}/g).map((oracion) => `<p>${oracion}</p>`).join(""))//separo en oraciones
+      .join("<br><br>");//unifico todo el array
   };
 
   //------------------------------------------------------------
