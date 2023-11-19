@@ -39,7 +39,7 @@ export const recibirNotasExistentes = async (setNotas, notas) => {
             //si ya existen notas locales, le añado la de la bd
             if (notasRecibidas[0]) {
                 respuestaTraducida.forEach(nota => {
-                    let notasRecibidasAUX = notasRecibidas.map(arrX => arrX.id === nota[0] ? { id: arrX.id, nota: nota[1], fecha: nota[2] } : arrX);
+                    let notasRecibidasAUX = notasRecibidas.map(arrX => arrX.id === nota[0] ? { id: arrX.id, nota: nota[1], fecha: nota[2] } : { id: nota[0], nota: nota[1], fecha: nota[2] });
                     notasRecibidas = notasRecibidasAUX.slice();
                 });
             }
