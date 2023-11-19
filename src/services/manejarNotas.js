@@ -17,11 +17,11 @@ export const subirNotaABD = async (nota) => {
     datos.append('texto', nota.nota);
     datos.append('fecha', nota.fecha);
     fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/subirNota.php', { method: "POST", body: datos })
-    .then(res => res.text())
-    .then(
-        res => console.log(res)
-    )
-    .catch(e => console.log(e));
+        .then(res => res.text())
+        .then(
+            res => console.log(res)
+        )
+        .catch(e => console.log(e));
 }
 
 //   -----------------------------------------------------------------
@@ -35,17 +35,16 @@ export const recibirNotasExistentes = async (setNotas, notas) => {
         const respuesta = await fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/recibirNotas.php', { method: "POST", body: datos });
         const respuestaTraducida = await respuesta.json();
 
-        if (Array.isArray(respuestaTraducida) && respuestaTraducida[0])
-        {
+        if (Array.isArray(respuestaTraducida) && respuestaTraducida[0]) {
             //si ya existen notas locales, le añado la de la bd
             if (notasRecibidas[0]) {
                 respuestaTraducida.forEach(nota => {
-                    let notasRecibidasAUX = notasRecibidas.map(arrX => arrX.id === nota[0]? {id: arrX.id, nota: nota[1], fecha: nota[2]} : arrX);
+                    let notasRecibidasAUX = notasRecibidas.map(arrX => arrX.id === nota[0] ? { id: arrX.id, nota: nota[1], fecha: nota[2] } : arrX);
                     notasRecibidas = notasRecibidasAUX.slice();
                 });
             }
-            else{
-                respuestaTraducida.forEach(nota => notasRecibidas.push({id: nota[0], nota: nota[1], fecha: nota[2]}));
+            else {
+                respuestaTraducida.forEach(nota => notasRecibidas.push({ id: nota[0], nota: nota[1], fecha: nota[2] }));
             }
         }
         setNotas(notasRecibidas);
@@ -87,7 +86,7 @@ const transformarTextoHtml = (txt) => {
 
 //   -----------------------------------------------------------------
 
-const extraerTextoPagina_op2 = async (url,setLoaderText)=>{
+const extraerTextoPagina_op2 = async (url, setLoaderText) => {
     try {
         setLoaderText('Usando php....');
         const urlBuscar = new FormData();
@@ -102,12 +101,12 @@ const extraerTextoPagina_op2 = async (url,setLoaderText)=>{
 
 }
 
-export const extraerTextoPagina = async (url,setLoaderText) => {
+export const extraerTextoPagina = async (url, setLoaderText) => {
     try {
         setLoaderText('Utilizando fetch...');
         const respuestaFetch = await fetch('/api/webPage/' + url);
         const respuesta = await respuestaFetch.json();
-    
+
         if (!respuesta) {
             setLoaderText('No funciono la primera opcion...');
             throw new Error('No funciono la primera opcion');
@@ -115,6 +114,6 @@ export const extraerTextoPagina = async (url,setLoaderText) => {
         textArea().innerHTML = transformarTextoHtml(respuesta);
     }
     catch {
-        extraerTextoPagina_op2(url,setLoaderText);
+        extraerTextoPagina_op2(url, setLoaderText);
     }
 }

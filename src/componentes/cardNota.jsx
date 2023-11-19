@@ -9,11 +9,11 @@ const CardNota = ({ nota }) => {
     .replace("a few seconds ago", "Hace unos segundos")
     .replace("a minute ago", "Hace un minuto")
     .replace("minutes ago", "min")
-    .replace("an hour ago", "h")
+    .replace("an hour ago", "1h")
     .replace("hours ago", "hs")
-    .replace("a month ago", "mes")
+    .replace("a month ago", "1 mes")
     .replace("months ago", "meses")
-    .replace("a year ago", "año")
+    .replace("a year ago", "1 año")
     .replace("years ago", "años");
   return (
     <div className="tarjeta" id={nota.id}>
