@@ -1,26 +1,36 @@
 import { useMain } from "@/app/context/mainContext";
 import Link from "next/link";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-const CardNota = ({ nota, id }) => {
-  const { setNotaId, borrarEstaNota } = useMain();
+
+const CardNota = ({ nota }) => {
+  const { setNotaId, borrarEstaNota, moment } = useMain();
+  var diferenciaHoraria = moment(nota.fecha, "YYYY-MM-DD HH:mm:ss").fromNow();
+  diferenciaHoraria = diferenciaHoraria
+    .replace("a few seconds ago", "Hace unos segundos")
+    .replace("a minute ago", "Hace un minuto")
+    .replace("minutes ago", "min")
+    .replace("an hour ago", "h")
+    .replace("hours ago", "hs")
+    .replace("a month ago", "mes")
+    .replace("months ago", "meses")
+    .replace("a year ago", "año")
+    .replace("years ago", "años");
   return (
-    <div className="tarjeta" id={id}>
+    <div className="tarjeta" id={nota.id}>
       <Link
-        onClick={() => setNotaId(id)}
+        onClick={() => setNotaId(nota.id)}
         href="/Nota"
         className="tarjeta__contenido"
       >
         <div
           className="tarjeta__contenido-cuerpo"
-          dangerouslySetInnerHTML={{ __html: nota.slice(0,1000) }}
+          dangerouslySetInnerHTML={{ __html: nota.nota.slice(0, 1000) }}
         ></div>
-        <p className="tarjeta__contenido-pie ">
-          02:14pm
-        </p>
+        <p className="tarjeta__contenido-pie ">{diferenciaHoraria}</p>
       </Link>
       <div className="tarjeta__acciones">
         <Link
-          onClick={() => setNotaId(id)}
+          onClick={() => setNotaId(nota.id)}
           href="/Nota"
           className="tarjeta__acciones-editar"
         >
@@ -29,7 +39,7 @@ const CardNota = ({ nota, id }) => {
         </Link>
         <div
           className="tarjeta__acciones-eliminar"
-          onClick={() => borrarEstaNota(id)}
+          onClick={() => borrarEstaNota(nota.id)}
         >
           <AiFillDelete />
           <p>Delete</p>

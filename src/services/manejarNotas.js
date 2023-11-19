@@ -15,8 +15,13 @@ export const subirNotaABD = async (nota) => {
     datos.append('contrase', localStorage.getItem('contraseTalkMyAppUsuario'));
     datos.append('id', nota.id);
     datos.append('texto', nota.nota);
+    datos.append('fecha', nota.fecha);
     fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/subirNota.php', { method: "POST", body: datos })
-        .catch(e => console.log(e));
+    .then(res => res.text())
+    .then(
+        res => console.log(res)
+    )
+    .catch(e => console.log(e));
 }
 
 //   -----------------------------------------------------------------
@@ -29,14 +34,19 @@ export const recibirNotasExistentes = async (setNotas, notas) => {
     try {
         const respuesta = await fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/recibirNotas.php', { method: "POST", body: datos });
         const respuestaTraducida = await respuesta.json();
-        if (notasRecibidas[0]) {
-            respuestaTraducida.forEach(nota => {
-                let notasRecibidasAUX = notasRecibidas.map(arrX => arrX.id === nota[0]? {id: arrX.id, nota: nota[1]} : arrX);
-                notasRecibidas = notasRecibidasAUX.slice();
-            });
-        } else if (Array.isArray(respuestaTraducida)&& respuestaTraducida[0])
+
+        if (Array.isArray(respuestaTraducida) && respuestaTraducida[0])
         {
-            [...respuestaTraducida].forEach(nota => notasRecibidas.push({id: nota[0], nota: nota[1]}));
+            //si ya existen notas locales, le añado la de la bd
+            if (notasRecibidas[0]) {
+                respuestaTraducida.forEach(nota => {
+                    let notasRecibidasAUX = notasRecibidas.map(arrX => arrX.id === nota[0]? {id: arrX.id, nota: nota[1], fecha: nota[2]} : arrX);
+                    notasRecibidas = notasRecibidasAUX.slice();
+                });
+            }
+            else{
+                respuestaTraducida.forEach(nota => notasRecibidas.push({id: nota[0], nota: nota[1], fecha: nota[2]}));
+            }
         }
         setNotas(notasRecibidas);
         localStorage.setItem("notas", JSON.stringify(notasRecibidas));
@@ -65,37 +75,46 @@ export const eliminarNotaDeBD = async (idBorrar, estaLogueado) => {
 
 //   -----------------------------------------------------------------
 
-export const extraerTextoPagina = async (url) => {
-    const transformarTextoHtml = (txt) => {
-        return txt.replace(/(\w+)="[^"]*"/g, '').replace(/<p><\/p>/g, '')
-            .match(/<p\b[^<]*(?:(?!<\/p>)<[^<]*)*<\/p>|<li\b[^<]*(?:(?!<\/li>)<[^<]*)*<\/li>|<h1\b[^<]*(?:(?!<\/h1>)<[^<]*)*<\/h1>/g)
-            .map(parrafo => {
-                parrafo = parrafo.replace(/<([^>])+>/g, '').match(/[^.]+[.]{0,1}/g);
-                return Array.isArray(parrafo) && parrafo.length > 1 ? parrafo.map(e => `<p>${e}</p>`).join('') : `<p>${parrafo}</p>`;
-            })
-            .join('<br><br>');
-    }
+const transformarTextoHtml = (txt) => {
+    return txt.replace(/(\w+)="[^"]*"/g, '').replace(/<p><\/p>/g, '')
+        .match(/<p\b[^<]*(?:(?!<\/p>)<[^<]*)*<\/p>|<li\b[^<]*(?:(?!<\/li>)<[^<]*)*<\/li>|<h1\b[^<]*(?:(?!<\/h1>)<[^<]*)*<\/h1>/g)
+        .map(parrafo => {
+            parrafo = parrafo.replace(/<([^>])+>/g, '').match(/[^.]+[.]{0,1}/g);
+            return Array.isArray(parrafo) && parrafo.length > 1 ? parrafo.map(e => `<p>${e}</p>`).join('') : `<p>${parrafo}</p>`;
+        })
+        .join('<br><br>');
+}
+
+//   -----------------------------------------------------------------
+
+const extraerTextoPagina_op2 = async (url,setLoaderText)=>{
     try {
+        setLoaderText('Usando php....');
+        const urlBuscar = new FormData();
+        urlBuscar.append('url', url);
+        const respuestaFetchPHP = await fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/extraerTextoPagina.php', { method: "POST", body: urlBuscar });
+        const respuestaPHP = await respuestaFetchPHP.text();
+        textArea().innerHTML = transformarTextoHtml(respuestaPHP);
+    } catch (e) {
+        textArea().innerHTML = "<mark>Hubo algun error</mark>"
+        console.log(e);
+    }
+
+}
+
+export const extraerTextoPagina = async (url,setLoaderText) => {
+    try {
+        setLoaderText('Utilizando fetch...');
         const respuestaFetch = await fetch('/api/webPage/' + url);
         const respuesta = await respuestaFetch.json();
+    
         if (!respuesta) {
-            throw new Error('no funciono la primera opcion');
+            setLoaderText('No funciono la primera opcion...');
+            throw new Error('No funciono la primera opcion');
         }
-        else {
-            textArea().innerHTML = transformarTextoHtml(respuesta);
-        }
+        textArea().innerHTML = transformarTextoHtml(respuesta);
     }
     catch {
-        try {
-            console.log('se requirisio usar php.');
-            const urlBuscar = new FormData();
-            urlBuscar.append('url', url);
-            const respuestaFetchPHP = await fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/extraerTextoPagina.php', { method: "POST", body: urlBuscar });
-            const respuestaPHP = await respuestaFetchPHP.text();
-            textArea().innerHTML = transformarTextoHtml(respuestaPHP);
-        } catch (e) {
-            textArea().innerHTML = "<mark>Hubo algun error</mark>"
-            console.log(e);
-        }
+        extraerTextoPagina_op2(url,setLoaderText);
     }
 }

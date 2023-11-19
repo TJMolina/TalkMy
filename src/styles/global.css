@@ -21,8 +21,8 @@ body.oscuro{
   --color-logo:  #113583;
 }
 a {
-  text-decoration: none;
-  color: var(--color-logo);
+  text-decoration: none !important;
+  color: var(--fuente-letra) !important;
 }
 
 a,
@@ -31,6 +31,7 @@ button,
 input[type='button'] {
   cursor: pointer;
 }
+
 p {
   display: block;
   margin-block-start: 1em;
@@ -147,4 +148,5 @@ footer {
 .ventana button {
   color: var(--fuente-letra);
   background: var(--color-logo);
+  margin-bottom: 5px;
 }

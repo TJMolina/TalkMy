@@ -51,11 +51,10 @@ export default function Home() {
       <main>
         <div className="notas">
           {notas.length > 0 ? (
-            notas.map((n) => (
+            notas.map((nota) => (
               <CardNota
-                key={n.id}
-                id={n.id}
-                nota={n.nota}
+                key={nota.id}
+                nota={nota}
               />
             ))
           ) : (

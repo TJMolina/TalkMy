@@ -9,7 +9,7 @@
 }
 
 .tarjeta {
-  transition: all 0.2s;
+  transition: transform .8s, text-decoration 1s;
   font-size: 16px;
   border: 1px solid #b4b4b4;
   border-radius: 5px;
@@ -31,13 +31,13 @@
 }
 .tarjeta__contenido-cuerpo::first-line{
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 900;
 }
 .tarjeta__contenido-cuerpo {
   grid-area: nota-cuerpo;
   font-size: .8em;
   margin: 6px 12px;
-  height: 7em;
+  height: 6.4em;
   overflow: hidden;
 
 }
@@ -52,7 +52,6 @@
   display: flex;
   font-size: calc(1em - 4px);
   margin: 8px 12px;
-  max-width: 50px;
 }
 .tarjeta__acciones-editar,
 .tarjeta__acciones-eliminar {
@@ -88,6 +87,7 @@
 }
 
 .borrar{
+  text-decoration: line-through;
   transform: scale(0);
 }
 

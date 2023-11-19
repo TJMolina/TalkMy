@@ -33,6 +33,7 @@ import ApagarLuz from "@/componentes/modoOscuroButton";
 //contexto
 import { useMain } from "../context/mainContext";
 import Link from "next/link";
+import { Loader } from "rsuite";
 
 //------------------------------------------------------------
 
@@ -41,12 +42,12 @@ export default function Leer() {
   const [isPlay, setIsplay] = useState(false);
   //obtener estas variables y funciones del contexto con useMain
   const {
-    notas,
-    setNotas,
-    notaEditandoId,
-    setNotaId,
+    notas, setNotas,
+    notaEditandoId, setNotaId,
     estaLogueado,
     seguirLeyendo,
+    loaderText, setLoaderText,
+    moment
   } = useMain();
 
   //una lista auxiliar ordenada de todas las notas que existen
@@ -57,13 +58,14 @@ export default function Leer() {
   //------------------------------------------------------------
 
   //para extraer texto de una pagina
-  const extraerTexto = (e) => {
+  const extraerTexto = async(e) => {
     //detener evento del formulario
     e.preventDefault();
     //evio la url a esta funcion que modificara el textarea
-    extraerTextoPagina(e.target.urlPagina.value);
+    await extraerTextoPagina(e.target.urlPagina.value, setLoaderText);
     //cierro la ventana flotante
     cerrarModal();
+    setLoaderText(false);
   };
 
   //------------------------------------------------------------
@@ -86,9 +88,9 @@ export default function Leer() {
     document.querySelector("#google_translate_element > div a")?.click();
 
   //------------------------------------------------------------
-  
+
   //limpiar etiquetas y acomodar todo para un correcto funcionamiento
-   const limpiarTexto = (txt) => {
+  const limpiarTexto = (txt) => {
     return txt
       .split(/\n{3,}/)
       .map((parrafo) =>
@@ -125,7 +127,7 @@ export default function Leer() {
 
       //una variable auxiliar que almacena todas las notas, esta la voy a modificar y por ello no utilizo las que ya tengo.
       let notas = obtenerNotasLocales();
-
+      const fechaActual = moment();
       //si esta editando una nota, el proceso es otro
       if (notaEditandoId) {
         //obtengo el indice de esta nota, para editarla
@@ -137,13 +139,13 @@ export default function Leer() {
           notas[index].nota = notaIndividual;
           //si esta logueado, subo esta nota a la bd
           if (estaLogueado)
-            subirNotaABD({ id: notaEditandoId, nota: notaIndividual });
+            subirNotaABD({ id: notaEditandoId, nota: notaIndividual, fecha: fechaActual.format('YYYY-MM-DD HH:mm:ss') });
         }
       }
       //si no esta editando una nota
       else {
         //creo una nota con un id aleatorio y con el atributo nota que contiene todo el texto
-        const nota = { id: v4(), nota: notaIndividual };
+        const nota = { id: v4(), nota: notaIndividual, fecha: fechaActual.format('YYYY-MM-DD HH:mm:ss') };
         //si ya existen notas en el array de notas, incluir esta al inicio del array, sino agregarla individualmente
         notas = notas ? [nota, ...notas] : [nota];
         //si esta logueado, subo esta nota a la bd
@@ -337,12 +339,12 @@ export default function Leer() {
         </div>
       </Header>
 
-      <main translate="no">
+      <main>
         <div id="IrVentanaFlotante" className="modal">
           <div className="ventana">
             <a onClick={cerrarModal}>X</a>
             <form onSubmit={extraerTexto} autoComplete="false">
-              <h2>Url de pagina web</h2>
+              <h4>Url de pagina web</h4>
               <input
                 type="url"
                 required
@@ -350,6 +352,7 @@ export default function Leer() {
                 placeholder="ej: https://www.lightnovelcave.com/"
               />
               <button>Extraer texto</button>
+              {loaderText && <Loader content={loaderText} />}
             </form>
           </div>
         </div>

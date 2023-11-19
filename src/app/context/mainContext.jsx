@@ -1,6 +1,7 @@
 "use client";
 //librerias de react
 import { createContext, useContext, useEffect, useState } from "react";
+import moment from 'moment';
 
 //mis funciones
 import {
@@ -38,6 +39,9 @@ export const MainProvider = ({ children }) => {
   const [modoOscuro, setModoOscuro] = useState(false);
   //deberia existir un menu de opciones que me permita modificar esta configuracion. es para determinar si leer todas las notas o solo la seleccionada.
   const [seguirLeyendo, setSeguirLeyendo] = useState(true);
+  //Textos que apareceran en los loader
+  const [loaderText, setLoaderText] = useState("");
+
   //----------------------------------------------------------------------------------
   //funcion de interruptor de modo oscuro
   const luzOnOff = () => {
@@ -58,7 +62,7 @@ export const MainProvider = ({ children }) => {
 
       //borrar la nota del almacenamiento, esta funcion la borra tando de la bd como del localstorage
       eliminarNotaDeBD(idBorrar, estaLogueado);
-    }, 198);
+    }, 200);
   };
 
   //----------------------------------------------------------------------------------
@@ -88,6 +92,9 @@ export const MainProvider = ({ children }) => {
         luzOnOff,
         modoOscuro,
         seguirLeyendo,
+        loaderText, 
+        setLoaderText,
+        moment
       }}
     >
       {children}
