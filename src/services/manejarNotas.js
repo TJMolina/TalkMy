@@ -31,7 +31,8 @@ export const recibirNotasExistentes = async (setNotas, notas) => {
         const respuestaTraducida = await respuesta.json();
         if (notasRecibidas[0]) {
             respuestaTraducida.forEach(nota => {
-                if (!notasRecibidas.some(arrX => arrX.id === nota[0])) notasRecibidas.push({id: nota[0], nota: nota[1]});
+                let notasRecibidasAUX = notasRecibidas.map(arrX => arrX.id === nota[0]? {id: arrX.id, nota: nota[1]} : arrX);
+                notasRecibidas = notasRecibidasAUX.slice();
             });
         } else if (Array.isArray(respuestaTraducida)&& respuestaTraducida[0])
         {

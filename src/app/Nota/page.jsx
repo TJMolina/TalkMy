@@ -120,7 +120,7 @@ export default function Leer() {
           //edito la nota dentro del array de notas
           notas[index].nota = notaIndividual;
           //si esta logueado, subo esta nota a la bd
-          if (estaLogueado) subirNotaABD([notaEditandoId, notaIndividual]);
+          if (estaLogueado) subirNotaABD({id: notaEditandoId, nota: notaIndividual});
         }
       }
       //si no esta editando una nota
