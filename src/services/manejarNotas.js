@@ -39,7 +39,7 @@ export const recibirNotasExistentes = async (setNotas, notas) => {
             //si ya existen notas locales, le añado la de la bd
             if (notasRecibidas[0]) {
                 let notasAux = respuestaTraducida.map(notaBD => {
-                    const notaExistente = notasLocales.find(notaLocal => notaLocal.id === notaBD[0]);
+                    const notaExistente = notasRecibidas.find(notaLocal => notaLocal.id === notaBD[0]);
                     if(notaExistente) return {id: notaExistente.id, nota: notaBD[1], fecha: notaBD[2]};
                     return notaExistente;
                 });
