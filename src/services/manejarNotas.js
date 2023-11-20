@@ -40,7 +40,7 @@ export const recibirNotasExistentes = async (setNotas, notas) => {
             if (notasRecibidas[0]) {
                 let notasAux = respuestaTraducida.map(notaBD => {
                     const notaExistente = notasRecibidas.find(notaLocal => notaLocal.id === notaBD[0]);
-                    return notaExistente? {id: notaBD[0], nota: notaBD[1], fecha: notaBD[2]} : notaExistente;
+                    return notaExistente? {id: notaExistente.id, nota: notaBD[1], fecha: notaBD[2]} : { id: notaBD[0], nota: notaBD[1], fecha: notaBD[2] };
                 });
 
                 notasRecibidas = notasAux;
