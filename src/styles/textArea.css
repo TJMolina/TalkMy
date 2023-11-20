@@ -27,9 +27,3 @@
     content: "Escribe aquí...";
     color: gray;
   }
-  
-  .contenidoArchivo p,
-  .ContenedorNotaIndividual p {
-    margin-top: 0;
-    display: inline;
-  }

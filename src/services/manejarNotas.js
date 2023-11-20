@@ -83,14 +83,14 @@ export const eliminarNotaDeBD = async (idBorrar, estaLogueado) => {
 //   -----------------------------------------------------------------
 
 const transformarTextoHtml = (txt) => {
-    return txt.replace(/(\w+)="[^"]*"/g, '').replace(/<p><\/p>/g, '')
-        .match(/<p\b[^<]*(?:(?!<\/p>)<[^<]*)*<\/p>|<li\b[^<]*(?:(?!<\/li>)<[^<]*)*<\/li>|<h1\b[^<]*(?:(?!<\/h1>)<[^<]*)*<\/h1>/g)
-        .map(parrafo => {
-            parrafo = parrafo.replace(/<([^>])+>/g, '').match(/[^.]+[.]{0,1}/g);
-            return Array.isArray(parrafo) && parrafo.length > 1 ? parrafo.map(e => `<p>${e}</p>`).join('') : `<p>${parrafo}</p>`;
-        })
-        .join('<br><br>');
-}
+    return txt
+      .match(/<(p|li|h1)\b[^<]*(?:(?!<\/\1>)<[^<]*)*<\/\1>/g)
+      .map(parrafo => parrafo.replace(/<[^>]+>/g, ''))
+      .filter(part => part !== '')
+      .map(parrafo => parrafo.replace(/[^.]+[.]{0,1}/g, '<span>$&</span>'))
+      .join('<br><br>');
+  }
+  
 
 //   -----------------------------------------------------------------
 
