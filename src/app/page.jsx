@@ -23,7 +23,7 @@ import { logOut } from "@/libs/login-register";
 import { useEffect } from "react";
 
 export default function Home() {
-  const { estaLogueado, notas, setNotas, setNotaId } = useMain();
+  const { estaLogueado, notas, setNotaId } = useMain();
 
   //se ejecutara al renderizar el index
   useEffect(() => {

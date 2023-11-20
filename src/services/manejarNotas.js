@@ -26,8 +26,7 @@ export const subirNotaABD = async (nota) => {
 
 //   -----------------------------------------------------------------
 
-export const recibirNotasExistentes = async (setNotas, notas) => {
-    let notasRecibidas = notas;
+export const recibirNotasExistentes = async (setNotas, notasRecibidas) => {
     const datos = new FormData();
     datos.append('nombre', localStorage.getItem('nombreTalkMyAppUsuario'));
     datos.append('contrase', localStorage.getItem('contraseTalkMyAppUsuario'));
@@ -38,9 +37,16 @@ export const recibirNotasExistentes = async (setNotas, notas) => {
         if (Array.isArray(respuestaTraducida) && respuestaTraducida[0]) {
             //si ya existen notas locales, le añado la de la bd
             if (notasRecibidas[0]) {
-                let notasAux = respuestaTraducida.map(notaBD => {
-                    const notaExistente = notasRecibidas.find(notaLocal => notaLocal.id === notaBD[0]);
-                    return notaExistente? {id: notaExistente.id, nota: notaBD[1], fecha: notaBD[2]} : {id: notaBD[0], nota: notaBD[1], fecha: notaBD[2]};
+                let notasAux = notasRecibidas.slice();
+                respuestaTraducida.forEach(notaBD => {
+                    const notaExistente = notasRecibidas.findIndex(notaLocal => notaLocal.id === notaBD[0]);
+                    if(notaExistente > -1){
+                        notasAux[notaExistente].nota = notaBD[1];
+                        notasAux[notaExistente].fecha = notaBD[2];
+                    }
+                    else{
+                        notasAux.push({id: notaBD[0], nota: notaBD[1], fecha: notaBD[2]})
+                    }
                 });
 
                 notasRecibidas = notasAux;
