@@ -32,7 +32,7 @@ export const recibirNotasExistentes = async (setNotas, notasRecibidas) => {
     datos.append('contrase', localStorage.getItem('contraseTalkMyAppUsuario'));
     try {
         const respuesta = await fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/recibirNotas.php', { method: "POST", body: datos });
-        const respuestaTraducida = await respuesta.json();
+        let respuestaTraducida = await respuesta.json();
 
         if (Array.isArray(respuestaTraducida) && respuestaTraducida[0]) {
             //si ya existen notas locales, le añado la de la bd
@@ -94,9 +94,9 @@ const transformarTextoHtml = (txt) => {
 
 //   -----------------------------------------------------------------
 
-const extraerTextoPagina_op2 = async (url, setLoaderText) => {
+const extraerTextoPagina_op2 = async (url) => {
     try {
-        setLoaderText('Usando php....');
+        console.log('Se requirio usar php...')
         const urlBuscar = new FormData();
         urlBuscar.append('url', url);
         const respuestaFetchPHP = await fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/extraerTextoPagina.php', { method: "POST", body: urlBuscar });
@@ -122,6 +122,7 @@ export const extraerTextoPagina = async (url, setLoaderText) => {
         textArea().innerHTML = transformarTextoHtml(respuesta);
     }
     catch {
-        extraerTextoPagina_op2(url, setLoaderText);
+        setLoaderText('Usando php....');
+        await extraerTextoPagina_op2(url, setLoaderText);
     }
 }

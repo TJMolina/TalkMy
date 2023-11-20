@@ -17,7 +17,7 @@
             while ($fila = $result->fetch_assoc()){
                 $datos[] = [$fila['id'],$fila['texto'],$fila['fecha']];
             }
-            echo json_encode($datos);
+            echo json_encode(array_reverse($datos));
         }
         else{
             echo json_encode('No hay notas');

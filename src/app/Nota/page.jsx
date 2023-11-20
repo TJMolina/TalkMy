@@ -123,7 +123,6 @@ export default function Leer() {
 
       //una variable auxiliar que almacena todas las notas, esta la voy a modificar y por ello no utilizo las que ya tengo.
       let notas = obtenerNotasLocales();
-      const fechaActual = moment();
       //si esta editando una nota, el proceso es otro
       if (notaEditandoId) {
         //obtengo el indice de esta nota, para editarla
@@ -135,13 +134,13 @@ export default function Leer() {
           notas[index].nota = notaIndividual;
           //si esta logueado, subo esta nota a la bd
           if (estaLogueado)
-            subirNotaABD({ id: notaEditandoId, nota: notaIndividual, fecha: fechaActual.format('YYYY-MM-DD HH:mm:ss') });
+            subirNotaABD({ id: notaEditandoId, nota: notaIndividual, fecha: moment().format('YYYY-MM-DD HH:mm:ss') });
         }
       }
       //si no esta editando una nota
       else {
         //creo una nota con un id aleatorio y con el atributo nota que contiene todo el texto
-        const nota = { id: v4(), nota: notaIndividual, fecha: fechaActual.format('YYYY-MM-DD HH:mm:ss') };
+        const nota = { id: v4(), nota: notaIndividual, fecha: moment().format('YYYY-MM-DD HH:mm:ss') };
         //si ya existen notas en el array de notas, incluir esta al inicio del array, sino agregarla individualmente
         notas = notas ? [nota, ...notas] : [nota];
         //si esta logueado, subo esta nota a la bd
@@ -338,7 +337,7 @@ export default function Leer() {
       <main>
         <div id="IrVentanaFlotante" className="modal">
           <div className="ventana">
-            <a onClick={cerrarModal}>X</a>
+            <div onClick={cerrarModal} style={{cursor:'pointer', display:'inline'}}>X</div>
             <form onSubmit={extraerTexto} autoComplete="false">
               <h4>Url de pagina web</h4>
               <input

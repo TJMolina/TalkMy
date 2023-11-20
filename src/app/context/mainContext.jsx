@@ -67,14 +67,12 @@ export const MainProvider = ({ children }) => {
   //----------------------------------------------------------------------------------
   //se ejecutara al renderizar el index
   useEffect(() => {
+    setNotas(obtenerNotasLocales())
     //verificare si esta logueado o no. si esta logueado, recibir notas de la bd
     if(localStorage.getItem("contraseTalkMyAppUsuario"))
     {
       recibirNotasExistentes(setNotas, obtenerNotasLocales());
       setLogueado(true)
-    }
-    else{
-      setNotas(obtenerNotasLocales())
     }
   }, []);
 
