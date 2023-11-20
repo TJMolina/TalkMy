@@ -5,8 +5,9 @@ import moment from 'moment';
 
 //mis funciones
 import {
-  eliminarNotaDeBD,
+  eliminarNotaDeBD, recibirNotasExistentes,
 } from "@/services/manejarNotas";
+import { obtenerNotasLocales } from "@/services/manejarNotas";
 
 //----------------------------------------------------------------------------------
 
@@ -67,7 +68,14 @@ export const MainProvider = ({ children }) => {
   //se ejecutara al renderizar el index
   useEffect(() => {
     //verificare si esta logueado o no. si esta logueado, recibir notas de la bd
-    setLogueado(localStorage.getItem("contraseTalkMyAppUsuario")? true : false)
+    if(localStorage.getItem("contraseTalkMyAppUsuario"))
+    {
+      recibirNotasExistentes(setNotas, obtenerNotasLocales());
+      setLogueado(true)
+    }
+    else{
+      setNotas(obtenerNotasLocales())
+    }
   }, []);
 
   //----------------------------------------------------------------------------------

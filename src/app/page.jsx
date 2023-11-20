@@ -21,7 +21,6 @@ import {
 import { useMain } from "./context/mainContext";
 import { logOut } from "@/libs/login-register";
 import { useEffect } from "react";
-import { obtenerNotasLocales, recibirNotasExistentes } from "@/services/manejarNotas";
 
 export default function Home() {
   const { estaLogueado, notas, setNotas, setNotaId } = useMain();
@@ -29,10 +28,6 @@ export default function Home() {
   //se ejecutara al renderizar el index
   useEffect(() => {
     setNotaId("");
-    //Mostrar todas las notas existentes en  la cuenta del usuario al iniciar la pagina
-    const notasAux = obtenerNotasLocales();
-    //verificare si esta logueado o no. si esta logueado, recibir notas de la bd
-    estaLogueado ? recibirNotasExistentes(setNotas, notasAux) : setNotas(notasAux);
   }, []);
 
   //----------------------------------------------------------------------------------
