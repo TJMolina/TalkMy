@@ -31,7 +31,7 @@
 }
 .tarjeta__contenido-cuerpo::first-line{
   font-size: 1rem;
-  font-weight: 900;
+  font-weight: 600;
 }
 .tarjeta__contenido-cuerpo {
   grid-area: nota-cuerpo;

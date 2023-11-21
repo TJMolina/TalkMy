@@ -1,24 +1,26 @@
 @media (max-width: 795px) {
-    .labelsMenu {
-      width: 0;
-      overflow: hidden;
-      transition: all .4s;
-    }
-    .labelsMenu.ver {
-      width: 6.5rem;
-    }
     .contenidoArchivo:focus {
-      outline: none;
-      border: none;
+      outline: none !important;
+      border: none !important;
     }
     .textAreaContainer {
       padding: 0;
-    }
-    .labelVerMenu{
-      display: inline;
     }
     .tarjeta{
       width: 98%;
       max-width: 98%;
     }
+}
+@media(max-width: 20rem){
+  .labelVerMenu{
+    display: inline;
   }
+  .labelsMenu {
+    width: 0;
+    overflow: hidden;
+    transition: all .4s;
+  }
+  .labelsMenu.ver {
+    width: 6rem;
+  }
+}

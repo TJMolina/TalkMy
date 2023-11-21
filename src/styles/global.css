@@ -64,6 +64,9 @@ header {
 header * {
   color: var(--fuente-letra);
 }
+header p{
+  margin-right: 5px;
+}
 main {
   display: flex;
   position: relative;

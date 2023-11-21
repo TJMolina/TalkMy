@@ -318,12 +318,12 @@ export default function Leer() {
     <>
       <Header>
         <div className="contenedorLabels">
-          <Link href={"/"} onClick={crearNota} className="label">
+          <Link href={"/"} onClick={crearNota}>
             <AiOutlineSave />
           </Link>
 
           <div className="labelsMenu">
-            <label onClick={cerrarModal} className="label">
+            <label onClick={cerrarModal}>
               <AiOutlineCloud className="svg" />
             </label>
 
@@ -337,7 +337,7 @@ export default function Leer() {
             onClick={(e) =>
               document.querySelector(".labelsMenu").classList.toggle("ver")
             }
-            className="label labelVerMenu"
+            className="labelVerMenu"
           >
             <AiOutlineBars />
           </label>

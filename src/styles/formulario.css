@@ -90,6 +90,7 @@
   }
   
   .wrapper a {
+    color: var(--fuente-letra-form) !important;
     text-decoration: underline;
   }
   
