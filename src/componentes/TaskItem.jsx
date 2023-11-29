@@ -1,12 +1,16 @@
 import { useMain } from "@/app/context/mainContext";
+import { completarNota } from "@/services/manejarNotas";
 import Link from "next/link";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { useState } from "react";
+import { AiFillDelete, AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 
 const CardNota = ({ nota }) => {
   const { setNotaId, borrarEstaNota, moment } = useMain();
+  const [completada, setCompletada] = useState(nota.completada === '1'? true : false);
   var diferenciaHoraria = moment(nota.fecha, "YYYY-MM-DD HH:mm:ss").fromNow();
   diferenciaHoraria = diferenciaHoraria
     .replace("a few seconds ago", "Hace unos segundos")
+    .replace("seconds ago", "Hace unos segundos")
     .replace("a minute ago", "Hace un minuto")
     .replace("minutes ago", "min")
     .replace("an hour ago", "1h")
@@ -15,11 +19,22 @@ const CardNota = ({ nota }) => {
     .replace("months ago", "meses")
     .replace("a year ago", "1 año")
     .replace("years ago", "años");
+
+  const completar = () => {
+    nota.completada = nota.completada == "1"? "0":"1";
+    setCompletada(!completada);
+    document.getElementById(nota.id).classList.toggle("NotaCompletada");
+    completarNota(nota, moment().format("YYYY-MM-DD HH:mm:ss"));
+  };
+
   return (
-    <div className="tarjeta" id={nota.id}>
+    <div
+      className={`tarjeta ${completada && "NotaCompletada"}`}
+      id={nota.id}
+    >
       <Link
         onClick={() => setNotaId(nota.id)}
-        href="/Nota"
+        href="/TaskForm"
         className="tarjeta__contenido"
       >
         <div
@@ -29,20 +44,15 @@ const CardNota = ({ nota }) => {
         <p className="tarjeta__contenido-pie ">{diferenciaHoraria}</p>
       </Link>
       <div className="tarjeta__acciones">
-        <Link
-          onClick={() => setNotaId(nota.id)}
-          href="/Nota"
-          className="tarjeta__acciones-editar"
-        >
-          <AiFillEdit />
-          <p>Edit</p>
+        <Link onClick={completar} href="#" className="tarjeta__acciones-editar">
+        {completada?<AiOutlineClose />:<AiOutlineCheck />}
         </Link>
         <div
           className="tarjeta__acciones-eliminar"
           onClick={() => borrarEstaNota(nota.id)}
         >
           <AiFillDelete />
-          <p>Delete</p>
+          <p>Del</p>
         </div>
       </div>
     </div>

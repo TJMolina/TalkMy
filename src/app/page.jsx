@@ -5,7 +5,7 @@ import Image from "next/image";
 
 //componentes
 import Header from "@/componentes/header";
-import CardNota from "@/componentes/cardNota";
+import CardNota from "@/componentes/TaskItem";
 import Footer from "@/componentes/footer";
 import ApagarLuz from "@/componentes/modoOscuroButton";
 
@@ -68,7 +68,7 @@ export default function Home() {
             </div>
           )}
         </div>
-        <Link className="boton boton--add" href="/Nota">
+        <Link className="boton boton--add" href="/TaskForm">
           <AiOutlinePlus style={{ marginRight: "5px" }} /> Agregar Nueva Nota
         </Link>
       </main>

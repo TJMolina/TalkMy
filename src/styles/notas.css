@@ -98,3 +98,6 @@
   justify-content: center;
   align-items: center;
 }
+.NotaCompletada .tarjeta__contenido-cuerpo{
+  text-decoration: line-through;
+}

@@ -40,19 +40,21 @@ export const recibirNotasExistentes = async (setNotas, notasRecibidas) => {
                 let notasAux = notasRecibidas.slice();
                 respuestaTraducida.forEach(notaBD => {
                     const notaExistente = notasRecibidas.findIndex(notaLocal => notaLocal.id === notaBD[0]);
+                    //si en el localstorage ya existe una nota, actualizarla
                     if(notaExistente > -1){
                         notasAux[notaExistente].nota = notaBD[1];
                         notasAux[notaExistente].fecha = notaBD[2];
+                        notasAux[notaExistente].completada = notaBD[3];
                     }
                     else{
-                        notasAux.push({id: notaBD[0], nota: notaBD[1], fecha: notaBD[2]})
+                        notasAux.push({id: notaBD[0], nota: notaBD[1], fecha: notaBD[2], completada: nota[3]});
                     }
                 });
 
                 notasRecibidas = notasAux;
             }
             else {
-                notasRecibidas = respuestaTraducida.map(nota => ({id: nota[0], nota: nota[1], fecha: nota[2]}));
+                notasRecibidas = respuestaTraducida.map(nota => ({id: nota[0], nota: nota[1], fecha: nota[2], completada: nota[3]}));
             }
         }
         setNotas(notasRecibidas);
@@ -91,6 +93,23 @@ const transformarTextoHtml = (txt) => {
       .join('<br><br>');
   }
   
+
+//   -----------------------------------------------------------------
+
+export const completarNota = (nota, fecha)=>{
+ const datos = new FormData();
+    datos.append('nombre', localStorage.getItem('nombreTalkMyAppUsuario'));
+    datos.append('contrase', localStorage.getItem('contraseTalkMyAppUsuario'));
+    datos.append('id', nota.id);
+    datos.append('completada', nota.completada);
+    datos.append('fecha', fecha);
+    fetch('https://bdtalkmy.000webhostapp.com/AcionNotas/completar.php', { method: "POST", body: datos })
+        .then(res => res.text())
+        .then(
+            res => console.log(res)
+        )
+        .catch(e => console.log(e));
+}
 
 //   -----------------------------------------------------------------
 

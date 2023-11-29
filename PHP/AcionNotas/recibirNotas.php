@@ -7,7 +7,7 @@
     $consulta->execute();
     $result = $consulta->get_result();
     if($result->num_rows > 0){
-        $consulta = $conn->prepare("SELECT id, texto, fecha FROM notas WHERE nombre = ?");
+        $consulta = $conn->prepare("SELECT id, texto, fecha, completada FROM notas WHERE nombre = ?");
         $consulta->bind_param("s",$nombre);
         $consulta->execute();
         $result = $consulta->get_result();
@@ -15,7 +15,7 @@
             // $datos = $result->fetch_all(MYSQLI_ASSOC);
             $datos = array();
             while ($fila = $result->fetch_assoc()){
-                $datos[] = [$fila['id'],$fila['texto'],$fila['fecha']];
+                $datos[] = [$fila['id'],$fila['texto'],$fila['fecha'],$fila['completada']];
             }
             echo json_encode(array_reverse($datos));
         }
