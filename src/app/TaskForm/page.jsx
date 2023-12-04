@@ -74,6 +74,7 @@ export default function Leer() {
   //------------------------------------------------------------
   //altero la lista auxiliar de las notas para lanzar el evento useEffecto correspondiente mas abajo en el codigo. Borro el primer elemento.
   const leerSiguiente = () => {
+    if(!notasSiguientes) return;
     //array auxiliar que devolvera el mismo array pero sin el primer elemento. Esto porque notasSiguientes es una constante.
     let aux = notasSiguientes.slice();
     aux.shift();
@@ -397,7 +398,7 @@ export default function Leer() {
             className={"botonPlay boton-circular"}
             id="play"
           >
-            {isPlay ? <AiOutlinePause /> : <AiOutlineCaretRight />}
+            {isPlay ? <AiOutlinePause style={{ paddingTop: "5px" }} /> : <AiOutlineCaretRight  style={{ padding: "5px 0 0 3px" }} />}
           </button>
         </div>
         <Script src="/pdfLib/pdf.js" />

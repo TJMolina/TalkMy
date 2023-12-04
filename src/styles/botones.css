@@ -9,9 +9,6 @@
   background: var(--color-logo);
   transition: background-color 0.2s ease, border 0.2s ease;
 }
-.botonPlay{
-  padding: 5px 0 0 3px;
-}
 /* Boton de borrar texto */
 .clear-button {
   width: 2rem;
