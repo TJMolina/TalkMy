@@ -74,7 +74,7 @@ export default function Leer() {
   //------------------------------------------------------------
   //altero la lista auxiliar de las notas para lanzar el evento useEffecto correspondiente mas abajo en el codigo. Borro el primer elemento.
   const leerSiguiente = () => {
-    if(!notasSiguientes) return;
+    if (!notasSiguientes) return;
     //array auxiliar que devolvera el mismo array pero sin el primer elemento. Esto porque notasSiguientes es una constante.
     let aux = notasSiguientes.slice();
     aux.shift();
@@ -97,11 +97,14 @@ export default function Leer() {
   const limpiarTexto = (txt) => {
     return txt
       .split(/(\r?\n){2,}/) //separamos en parrafos
-      .filter((part) => part.trim() !== "") //borro los sobrantes
+      .filter((part) => part.trim() && part !== '.') //borro los sobrantes
       .map((parrafo) =>
         parrafo
           .match(/[^.]+[.]{0,1}/g)
-          .map((oracion) => `<span>${oracion.replace("\n", "<br>")}</span>`)
+          .map(
+            (oracion) =>
+              `<p style="display: inline">${oracion.replace("\n", "<br>")}</p>`
+          )
           .join("")
       ) //separo en oraciones
       .join("<br><br>"); //unifico todo el array
@@ -398,7 +401,11 @@ export default function Leer() {
             className={"botonPlay boton-circular"}
             id="play"
           >
-            {isPlay ? <AiOutlinePause style={{ paddingTop: "5px" }} /> : <AiOutlineCaretRight  style={{ padding: "5px 0 0 3px" }} />}
+            {isPlay ? (
+              <AiOutlinePause style={{ paddingTop: "5px" }} />
+            ) : (
+              <AiOutlineCaretRight style={{ padding: "5px 0 0 3px" }} />
+            )}
           </button>
         </div>
         <Script src="/pdfLib/pdf.js" />

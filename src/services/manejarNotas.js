@@ -47,7 +47,7 @@ export const recibirNotasExistentes = async (setNotas, notasRecibidas) => {
                         notasAux[notaExistente].completada = notaBD[3];
                     }
                     else{
-                        notasAux.push({id: notaBD[0], nota: notaBD[1], fecha: notaBD[2], completada: nota[3]});
+                        notasAux.push({id: notaBD[0], nota: notaBD[1], fecha: notaBD[2], completada: notaBD[3]});
                     }
                 });
 
