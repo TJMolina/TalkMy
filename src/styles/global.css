@@ -84,12 +84,6 @@ footer {
   color: var(--fuente-letra);
 }
 
-/* Parrafo resaltado de la pagina Nota */
-.parrafoEnfocadoRemarcado {
-  background-color: #59b4df;
-  color: var(--fuente-letra) !important;
-}
-
 div.skiptranslate iframe.skiptranslate {
   position: relative !important;
 }

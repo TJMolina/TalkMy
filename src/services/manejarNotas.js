@@ -89,7 +89,7 @@ const transformarTextoHtml = (txt) => {
       .match(/<(p|li|h1)\b[^<]*(?:(?!<\/\1>)<[^<]*)*<\/\1>/g)
       .map(parrafo => parrafo.replace(/<[^>]+>/g, ''))
       .filter(part => part !== '')
-      .map(parrafo => parrafo.replace(/[^.]+[.]{0,1}/g, '<span>$&</span>'))
+      .map(parrafo => parrafo.replace(/[^.]+[.]{0,3}/g, '<p>$&</p>'))
       .join('<br><br>');
   }
   
