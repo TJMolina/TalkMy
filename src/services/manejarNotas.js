@@ -145,13 +145,14 @@ export const eliminarNota = (idBorrar, estaLogueado, setNotas) => {
 //   -----------------------------------------------------------------
 
 const transformarTextoHtml = (txt) => {
-  return txt
-    .match(/<(p|li|h1)\b[^<]*(?:(?!<\/\1>)<[^<]*)*<\/\1>/g)
-    .map((parrafo) => parrafo.replace(/<[^>]+>/g, ""))
-    .filter((part) => part !== "")
-    .map((parrafo) => parrafo.replace(/[^.]+[.]{0,1}/g, "<span>$&</span>"))
-    .join("<br><br>");
-};
+    return txt
+      .match(/<(p|li|h1)\b[^<]*(?:(?!<\/\1>)<[^<]*)*<\/\1>/g)
+      .map(parrafo => parrafo.replace(/<[^>]+>/g, ''))
+      .filter(part => part !== '')
+      .map(parrafo => parrafo.replace(/[^.]+[.]{0,3}/g, '<p>$&</p>'))
+      .join('<br><br>');
+  }
+  
 
 //   -----------------------------------------------------------------
 

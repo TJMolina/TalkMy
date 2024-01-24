@@ -74,7 +74,7 @@ export default function Leer() {
   //------------------------------------------------------------
   //altero la lista auxiliar de las notas para lanzar el evento useEffecto correspondiente mas abajo en el codigo. Borro el primer elemento.
   const leerSiguiente = () => {
-    if(!notasSiguientes) return;
+    if (!notasSiguientes) return;
     //array auxiliar que devolvera el mismo array pero sin el primer elemento. Esto porque notasSiguientes es una constante.
     let aux = notasSiguientes.slice();
     aux.shift();
@@ -94,18 +94,12 @@ export default function Leer() {
   //------------------------------------------------------------
 
   //limpiar etiquetas y acomodar todo para un correcto funcionamiento
-  const limpiarTexto = (txt) => {
-    return txt
-      .split(/(\r?\n){2,}/) //separamos en parrafos
-      .filter((part) => part.trim() !== "") //borro los sobrantes
-      .map((parrafo) =>
-        parrafo
-          .match(/[^.]+[.]{0,1}/g)
-          .map((oracion) => `<span>${oracion.replace("\n", "<br>")}</span>`)
-          .join("")
-      ) //separo en oraciones
-      .join("<br><br>"); //unifico todo el array
-  };
+  const limpiarTexto = txt => 
+      txt
+      .split(/(\r?\n){3,}/) //separamos en parrafos
+      .filter((part) => part.trim()) //borro los sobrantes
+      .map(parrafo => parrafo.replace('<','[').replace('>',']').replace(/[^.]+\.{0,3}/g, '<p>$&</p>'))
+      .join('<br><br>');
 
   //------------------------------------------------------------
 
@@ -120,7 +114,7 @@ export default function Leer() {
         .querySelector(".parrafoEnfocadoRemarcado")
         ?.classList?.remove("parrafoEnfocadoRemarcado");
 
-      const notaIndividual = textArea().innerText.replace(/\n{2,}/gi, "\n\n");
+      const notaIndividual = textArea().innerText.replace(/\n{3,}/gi, "\n\n\n");
 
       //inicio el proceso de crear
       creando = true;
@@ -398,7 +392,11 @@ export default function Leer() {
             className={"botonPlay boton-circular"}
             id="play"
           >
-            {isPlay ? <AiOutlinePause style={{ paddingTop: "5px" }} /> : <AiOutlineCaretRight  style={{ padding: "5px 0 0 3px" }} />}
+            {isPlay ? (
+              <AiOutlinePause style={{ paddingTop: "5px" }} />
+            ) : (
+              <AiOutlineCaretRight style={{ padding: "5px 0 0 3px" }} />
+            )}
           </button>
         </div>
         <Script src="/pdfLib/pdf.js" />

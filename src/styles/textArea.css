@@ -27,3 +27,12 @@
     content: "Escribe aquí...";
     color: gray;
   }
+
+#contenido-archivo p{
+  display: inline !important;
+}
+
+#contenido-archivo p.parrafoEnfocadoRemarcado, #contenido-archivo p.parrafoEnfocadoRemarcado *{
+  background-color: #59b4df;
+  color: var(--fuente-letra) !important;
+} 
