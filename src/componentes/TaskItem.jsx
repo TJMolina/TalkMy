@@ -1,5 +1,5 @@
 import { useMain } from "@/app/context/mainContext";
-import { completarNota } from "@/services/manejarNotas";
+import { completarNota } from "@/utils/manejarNotas";
 import Link from "next/link";
 import { useState } from "react";
 import { AiFillDelete, AiOutlineCheck, AiOutlineClose } from "react-icons/ai";

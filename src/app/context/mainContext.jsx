@@ -7,8 +7,8 @@ import moment from "moment";
 import {
   eliminarNota,
   recibirNotasExistentes,
-} from "@/services/manejarNotas";
-import { obtenerNotasLocales } from "@/services/manejarNotas";
+} from "@/utils/manejarNotas";
+import { obtenerNotasLocales } from "@/utils/manejarNotas";
 
 //----------------------------------------------------------------------------------
 

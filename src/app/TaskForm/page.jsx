@@ -12,7 +12,7 @@ import {
   subirNotaABD,
   extraerTextoPagina,
   textArea,
-} from "@/services/manejarNotas";
+} from "@/utils/manejarNotas";
 
 // componentes
 import Header from "@/componentes/header";

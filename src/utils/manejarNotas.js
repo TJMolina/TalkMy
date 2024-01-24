@@ -1,5 +1,4 @@
 //   -----------------------------------------------------------------
-
 export const obtenerNotasLocales = () =>
   localStorage.getItem("notas")
     ? JSON.parse(localStorage.getItem("notas"))
@@ -16,11 +15,11 @@ export const subirNotaABD = async (nota) => {
   datos.append("id", nota.id);
   datos.append("texto", nota.nota);
   datos.append("fecha", nota.fecha);
+  datos.append("auth-token", localStorage.getItem("token"));
   fetch(
     process.env.NEXT_PUBLIC_BASIC_PATH_URL_LOCAL + "AcionNotas/subirNota.php",
     {
       method: "POST",
-      credentials: "include",
       body: datos,
     }
   )
@@ -43,17 +42,20 @@ const verifyToken = async () => {
 //   -----------------------------------------------------------------
 
 const getNotasBD = async () => {
+  const datos = new FormData();
+  datos.append("auth-token", localStorage.getItem("token"));
   return await fetch(
     process.env.NEXT_PUBLIC_BASIC_PATH_URL_LOCAL +
       "AcionNotas/recibirNotas.php",
     {
-      credentials: "include"
+      method: "POST",
+      body: datos,
     }
   )
-    .then(res => res.text())
-    .then(res => {
-        console.log(res)
-        return null
+    .then((res) => res.text())
+    .then((res) => {
+      console.log(res);
+      return null;
     })
     .catch((e) => {
       console.log(e);
@@ -108,7 +110,7 @@ export const recibirNotasExistentes = async (
     setLogueado(true);
 
     const respuesta = await getNotasBD();
-    if(!Array.isArray(respuesta)) return
+    if (!Array.isArray(respuesta)) return;
 
     const notasFinal = procesarNotasRecibidasBD(respuesta, notasRecibidas);
 
@@ -131,12 +133,12 @@ export const eliminarNota = (idBorrar, estaLogueado, setNotas) => {
   if (!estaLogueado) return;
   const datos = new FormData();
   datos.append("id", idBorrar);
+  datos.append("auth-token", localStorage.getItem("token"));
   fetch(
     process.env.NEXT_PUBLIC_BASIC_PATH_URL_LOCAL +
       "AcionNotas/eliminarNota.php",
     {
       method: "POST",
-      credentials: "include",
       body: datos,
     }
   ).catch((e) => console.log(e));
@@ -145,14 +147,13 @@ export const eliminarNota = (idBorrar, estaLogueado, setNotas) => {
 //   -----------------------------------------------------------------
 
 const transformarTextoHtml = (txt) => {
-    return txt
-      .match(/<(p|li|h1)\b[^<]*(?:(?!<\/\1>)<[^<]*)*<\/\1>/g)
-      .map(parrafo => parrafo.replace(/<[^>]+>/g, ''))
-      .filter(part => part !== '')
-      .map(parrafo => parrafo.replace(/[^.]+[.]{0,3}/g, '<p>$&</p>'))
-      .join('<br><br>');
-  }
-  
+  return txt
+    .match(/<(p|li|h1)\b[^<]*(?:(?!<\/\1>)<[^<]*)*<\/\1>/g)
+    .map((parrafo) => parrafo.replace(/<[^>]+>/g, ""))
+    .filter((part) => part !== "")
+    .map((parrafo) => parrafo.replace(/[^.]+[.]{0,3}/g, "<p>$&</p>"))
+    .join("<br><br>");
+};
 
 //   -----------------------------------------------------------------
 
@@ -161,11 +162,14 @@ export const completarNota = (nota, fecha) => {
   datos.append("id", nota.id);
   datos.append("completada", nota.completada);
   datos.append("fecha", fecha);
-  fetch(process.env.NEXT_PUBLIC_BASIC_PATH_URL_LOCAL+"AcionNotas/completar.php", {
-    method: "POST",
-    credentials: "include",
-    body: datos,
-  })
+  datos.append("auth-token", localStorage.getItem("token"));
+  fetch(
+    process.env.NEXT_PUBLIC_BASIC_PATH_URL_LOCAL + "AcionNotas/completar.php",
+    {
+      method: "POST",
+      body: datos,
+    }
+  )
     .then((res) => res.text())
     .then((res) => console.log(res))
     .catch((e) => console.log(e));

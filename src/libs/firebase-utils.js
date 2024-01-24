@@ -13,8 +13,9 @@ const getAuth = async (email, password, router, isSignUp) => {
           headers: {
             Authorization: `Bearer ${await userCred.user.getIdToken()}`,
           },
-        }).then((response) => {
+        }).then(async (response) => {
           if (response.status === 200) {
+            localStorage.setItem('token', await userCred.user.getIdToken())
             window.location.href = "/";
           }
         });
@@ -30,8 +31,9 @@ const getAuth = async (email, password, router, isSignUp) => {
           headers: {
             Authorization: `Bearer ${await userCred.user.getIdToken()}`,
           },
-        }).then((response) => {
+        }).then(async (response) => {
           if (response.status === 200) {
+            localStorage.setItem('token', await userCred.user.getIdToken())
             window.location.href = "/";
           }
         });
@@ -46,7 +48,11 @@ const singOut = async () => {
   fetch("/api/auth/singOut", {
     credentials: "include"
   })
-    .then(() => window.location.reload())
+    .then(() => {
+      localStorage.setItem('token','')
+      window.location.reload()
+    }
+    )
     .catch((e) => console.log(e));
 };
 
