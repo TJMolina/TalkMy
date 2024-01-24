@@ -1,11 +1,12 @@
 "use client";
 //librerias de react
 import { createContext, useContext, useEffect, useState } from "react";
-import moment from 'moment';
+import moment from "moment";
 
 //mis funciones
 import {
-  eliminarNotaDeBD, recibirNotasExistentes,
+  eliminarNota,
+  recibirNotasExistentes,
 } from "@/services/manejarNotas";
 import { obtenerNotasLocales } from "@/services/manejarNotas";
 
@@ -57,10 +58,10 @@ export const MainProvider = ({ children }) => {
     //despues de darle tienpo a verse a la animacion de borrar, borrar definitivamente la nota
     setTimeout(() => {
       //borrar la nota de la lista en este contexto
-      setNotas(notas.filter((nota) => nota.id !== idBorrar));
+      //setNotas(notas.filter((nota) => nota.id !== idBorrar));
 
       //borrar la nota del almacenamiento, esta funcion la borra tando de la bd como del localstorage
-      eliminarNotaDeBD(idBorrar, estaLogueado);
+      eliminarNota(idBorrar, estaLogueado, setNotas);
     }, 200);
   };
 
@@ -68,12 +69,7 @@ export const MainProvider = ({ children }) => {
   //se ejecutara al renderizar el index
   useEffect(() => {
     setNotas(obtenerNotasLocales())
-    //verificare si esta logueado o no. si esta logueado, recibir notas de la bd
-    if(localStorage.getItem("contraseTalkMyAppUsuario"))
-    {
-      recibirNotasExistentes(setNotas, obtenerNotasLocales());
-      setLogueado(true)
-    }
+    recibirNotasExistentes(setNotas, obtenerNotasLocales, setLogueado);
   }, []);
 
   //----------------------------------------------------------------------------------
@@ -90,9 +86,9 @@ export const MainProvider = ({ children }) => {
         luzOnOff,
         modoOscuro,
         seguirLeyendo,
-        loaderText, 
+        loaderText,
         setLoaderText,
-        moment
+        moment,
       }}
     >
       {children}

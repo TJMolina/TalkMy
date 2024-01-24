@@ -1,14 +1,10 @@
 <?php 
     include('../conexion.php');
-    $nombre=$_POST['nombre'];
-    $contrase=$_POST['contrase'];
-    $consulta = $conn->prepare("SELECT * FROM usuarios WHERE nombre = ? AND contrase = ?");
-    $consulta->bind_param('ss',$nombre,$contrase);
-    $consulta->execute();
-    $result = $consulta->get_result();
-    if($result->num_rows > 0){
-        $consulta = $conn->prepare("SELECT id, texto, fecha, completada FROM notas WHERE nombre = ?");
-        $consulta->bind_param("s",$nombre);
+    if(isset($_COOKIE['auth-token'])){
+        $token = $_COOKIE['auth-token'];
+    
+        $consulta = $conn->prepare("SELECT * FROM notas WHERE usuarioID = ?");
+        $consulta->bind_param('s',$token);
         $consulta->execute();
         $result = $consulta->get_result();
         if($result->num_rows > 0){
@@ -18,14 +14,11 @@
                 $datos[] = [$fila['id'],$fila['texto'],$fila['fecha'],$fila['completada']];
             }
             echo json_encode(array_reverse($datos));
-        }
+            }
         else{
             echo json_encode('No hay notas');
         }
+        $consulta->close();
     }
-    else{
-        echo json_encode('fail');
-    }
-    $consulta->close();
     $conn->close();
 ?>

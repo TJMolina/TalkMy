@@ -1,24 +1,15 @@
 <?php
 include('../conexion.php');
 
-if(isset($_POST['nombre'], $_POST['contrase'],  $_POST['id'])){
-    $nombre = $_POST['nombre'];
-    $contrase = $_POST['contrase'];
+if(isset($_COOKIE['auth-token']) && isset($_POST['id'])){
+    $token = $_COOKIE['auth-token'];
     $id = $_POST['id'];
 
-    $consulta = $conn->prepare("SELECT * FROM usuarios WHERE nombre = ? AND contrase = ?");
-    $consulta->bind_param('ss', $nombre, $contrase);
+    $consulta = $conn->prepare("DELETE FROM notas WHERE id = ? AND usuarioID = ?");
+    $consulta->bind_param('ss', $id, $token); // Corregido: se cambió $nombre por $token
     $consulta->execute();
-    $result = $consulta->get_result();
+    echo 'listo';
 
-    if ($result->num_rows > 0) {
-        $consulta = $conn->prepare("DELETE FROM notas WHERE id= ? AND nombre = ?");
-        $consulta->bind_param('ss', $id, $nombre);
-        $consulta->execute();
-        echo 'listo';
-    } else {
-        echo 'Credenciales incorrectas o usuario no existente.';
-    }
     $consulta->close();
 } else {
     echo 'Faltan parámetros.';
