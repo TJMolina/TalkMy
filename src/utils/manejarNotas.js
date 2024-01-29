@@ -177,36 +177,15 @@ export const completarNota = (nota, fecha) => {
 
 //   -----------------------------------------------------------------
 
-const extraerTextoPagina_op2 = async (url) => {
-  try {
-    console.log("Se requirio usar php...");
-    const urlBuscar = new FormData();
-    urlBuscar.append("url", url);
-    const respuestaFetchPHP = await fetch(
-      "https://bdtalkmy.000webhostapp.com/AcionNotas/extraerTextoPagina.php",
-      { method: "POST", body: urlBuscar }
-    );
-    const respuestaPHP = await respuestaFetchPHP.text();
-    textArea().innerHTML = transformarTextoHtml(respuestaPHP);
-  } catch (e) {
-    textArea().innerHTML = "<mark>Hubo algun error</mark>";
-    console.log(e);
-  }
-};
+
 
 export const extraerTextoPagina = async (url, setLoaderText) => {
   try {
     setLoaderText("Utilizando fetch...");
     const respuestaFetch = await fetch("/api/webPage/" + url);
     const respuesta = await respuestaFetch.json();
-
-    if (!respuesta) {
-      setLoaderText("No funciono la primera opcion...");
-      throw new Error("No funciono la primera opcion");
-    }
     textArea().innerHTML = transformarTextoHtml(respuesta);
-  } catch {
-    setLoaderText("Usando php....");
-    await extraerTextoPagina_op2(url, setLoaderText);
+  } catch(e) {
+    console.log(e)
   }
 };

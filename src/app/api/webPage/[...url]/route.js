@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import * as cheerio from 'cheerio';
 import request from "request-promise";
 export const GET = async (req,{params}) => {
+    const url = params.url.join('/').replace(/https?:\/\/?/,'https://');
     try {
-        const url = params.url.join('/').replace(/https?:\/\/?/,'https://');
         const $ = await request({
             uri: url,
             headers: {
@@ -17,6 +17,25 @@ export const GET = async (req,{params}) => {
         return NextResponse.json(html);
         
     } catch (error) {
-        return NextResponse.json(html);
+        const op2 = await extraerTextoPagina_op2(url);
+        if(op2){
+            return NextResponse.json(op2)
+        }
+        return NextResponse.json(error)
     }
 }
+
+const extraerTextoPagina_op2 = async (url) => {
+    try {
+      const urlBuscar = new FormData();
+      urlBuscar.append("url", url);
+      const respuestaFetchPHP = await fetch(
+        "https://bdtalkmy.000webhostapp.com/AcionNotas/extraerTextoPagina.php",
+        { method: "POST", body: urlBuscar }
+      );
+      const respuestaPHP = await respuestaFetchPHP.text();
+      return respuestaFetchPHP;
+    } catch (e) {
+      return false;
+    }
+  };
