@@ -34,7 +34,7 @@ const extraerTextoPagina_op2 = async (url) => {
         { method: "POST", body: urlBuscar }
       );
       const respuestaPHP = await respuestaFetchPHP.text();
-      return respuestaFetchPHP;
+      return respuestaPHP;
     } catch (e) {
       return false;
     }
