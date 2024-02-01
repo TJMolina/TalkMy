@@ -49,7 +49,9 @@ export default function Home() {
               )}
             </label>
             <label className="label">
-              <AiOutlineInfoCircle />
+              <Link href="https://github.com/TJMolina/TalkMy">
+                <AiOutlineInfoCircle />
+              </Link>
             </label>
             <ApagarLuz />
           </div>

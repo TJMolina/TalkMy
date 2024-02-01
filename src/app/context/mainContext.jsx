@@ -7,7 +7,9 @@ import moment from "moment";
 import {
   eliminarNota,
   recibirNotasExistentes,
+  verifyToken,
 } from "@/utils/manejarNotas";
+import { singOut } from "@/libs/firebase-utils";
 import { obtenerNotasLocales } from "@/utils/manejarNotas";
 
 //----------------------------------------------------------------------------------
@@ -65,11 +67,19 @@ export const MainProvider = ({ children }) => {
     }, 200);
   };
 
+  const isLogged = async () => 
+  {
+    const logged = await verifyToken()
+    if(logged.isLogged){
+      setLogueado(true)
+      recibirNotasExistentes(setNotas, notas);
+    }
+  }
   //----------------------------------------------------------------------------------
   //se ejecutara al renderizar el index
   useEffect(() => {
     setNotas(obtenerNotasLocales())
-    recibirNotasExistentes(setNotas, obtenerNotasLocales, setLogueado);
+    isLogged()
   }, []);
 
   //----------------------------------------------------------------------------------

@@ -51,5 +51,5 @@ export async function GET(request) {
     return NextResponse.json({ isLogged: false }, { status: 401 });
   }
 
-  return NextResponse.json({ isLogged: true, user: decodedClaims }, { status: 200 });
+  return NextResponse.json({ isLogged: true }, { status: 200 });
 } 

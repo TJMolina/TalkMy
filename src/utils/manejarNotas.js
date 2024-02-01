@@ -1,3 +1,4 @@
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 //   -----------------------------------------------------------------
 export const obtenerNotasLocales = () =>
   localStorage.getItem("notas")
@@ -6,31 +7,14 @@ export const obtenerNotasLocales = () =>
 
 //   -----------------------------------------------------------------
 
-export const textArea = () => document.getElementById("contenido-archivo");
-
-//   -----------------------------------------------------------------
-
-export const subirNotaABD = async (nota) => {
-  const datos = new FormData();
-  datos.append("id", nota.id);
-  datos.append("texto", nota.nota);
-  datos.append("fecha", nota.fecha);
-  datos.append("auth-token", localStorage.getItem("token"));
-  fetch(
-    process.env.NEXT_PUBLIC_BASIC_PATH_URL_LOCAL + "AcionNotas/subirNota.php",
-    {
-      method: "POST",
-      body: datos,
-    }
-  )
-    .then((res) => res.text())
-    .then((res) => console.log(res))
-    .catch((e) => console.log(e));
+export const getUID = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  return user.uid;
 };
-
 //   -----------------------------------------------------------------
 
-const verifyToken = async () => {
+export const verifyToken = async () => {
   return await fetch("/api/auth/", { credentials: "include" })
     .then((res) => res.json())
     .catch((e) => {
@@ -41,26 +25,64 @@ const verifyToken = async () => {
 
 //   -----------------------------------------------------------------
 
-const getNotasBD = async () => {
-  const datos = new FormData();
-  datos.append("auth-token", localStorage.getItem("token"));
-  return await fetch(
-    process.env.NEXT_PUBLIC_BASIC_PATH_URL_LOCAL +
-      "AcionNotas/recibirNotas.php",
-    {
-      method: "POST",
-      body: datos,
+export const textArea = () => document.getElementById("contenido-archivo");
+
+export const subirNotaABD = async (nota) => {
+  try {
+    const authentifiqued = await verifyToken()
+    if (authentifiqued.isLogged) {
+      const user = getUID();
+      if (user) {
+        const datos = new FormData();
+        datos.append("id", nota.id);
+        datos.append("texto", nota.nota);
+        datos.append("fecha", nota.fecha);
+        datos.append("auth-token", user.uid);
+        fetch(
+          process.env.NEXT_PUBLIC_BASIC_PATH_URL_LOCAL +
+            "AcionNotas/subirNota.php",
+          {
+            method: "POST",
+            body: datos,
+          }
+        )
+          .then((res) => res.text())
+          .then((res) => console.log(res))
+          .catch((e) => console.log(e));
+      }
     }
-  )
-    .then((res) => res.text())
-    .then((res) => {
-      console.log(res);
-      return null;
-    })
-    .catch((e) => {
-      console.log(e);
-      return null;
-    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+//   -----------------------------------------------------------------
+
+const getNotasBD = async () => {
+  const authentifiqued = await verifyToken()
+  if (authentifiqued.isLogged) {
+    const user = getUID();
+    if (user) {
+      const datos = new FormData();
+      datos.append("auth-token", user);
+      return await fetch(
+        process.env.NEXT_PUBLIC_BASIC_PATH_URL_LOCAL +
+          "AcionNotas/recibirNotas.php",
+        {
+          method: "POST",
+          body: datos,
+        }
+      )
+        .then((res) => res.text())
+        .then((res) => {
+          return JSON.parse(res);
+        })
+        .catch((e) => {
+          console.log(e);
+          return null;
+        });
+    }
+  }
 };
 
 const procesarNotasRecibidasBD = (respuesta, notasRecibidas) => {
@@ -87,9 +109,9 @@ const procesarNotasRecibidasBD = (respuesta, notasRecibidas) => {
         }
       });
 
-      notasRecibidas = notasAux;
+      return notasAux;
     } else {
-      notasRecibidas = respuesta.map((nota) => ({
+      return respuesta.map((nota) => ({
         id: nota[0],
         nota: nota[1],
         fecha: nota[2],
@@ -101,18 +123,15 @@ const procesarNotasRecibidasBD = (respuesta, notasRecibidas) => {
 
 export const recibirNotasExistentes = async (
   setNotas,
-  notasRecibidas,
-  setLogueado
+  notas
 ) => {
   try {
     const logueado = await verifyToken();
     if (logueado?.isLogged == false) return;
-    setLogueado(true);
 
     const respuesta = await getNotasBD();
     if (!Array.isArray(respuesta)) return;
-
-    const notasFinal = procesarNotasRecibidasBD(respuesta, notasRecibidas);
+    const notasFinal = procesarNotasRecibidasBD(respuesta, notas);
 
     setNotas(notasFinal);
     localStorage.setItem("notas", JSON.stringify(notasFinal));
@@ -133,7 +152,7 @@ export const eliminarNota = (idBorrar, estaLogueado, setNotas) => {
   if (!estaLogueado) return;
   const datos = new FormData();
   datos.append("id", idBorrar);
-  datos.append("auth-token", localStorage.getItem("token"));
+  datos.append("auth-token", localStorage.getItem(getUID()));
   fetch(
     process.env.NEXT_PUBLIC_BASIC_PATH_URL_LOCAL +
       "AcionNotas/eliminarNota.php",
@@ -157,27 +176,28 @@ const transformarTextoHtml = (txt) => {
 
 //   -----------------------------------------------------------------
 
-export const completarNota = (nota, fecha) => {
-  const datos = new FormData();
-  datos.append("id", nota.id);
-  datos.append("completada", nota.completada);
-  datos.append("fecha", fecha);
-  datos.append("auth-token", localStorage.getItem("token"));
-  fetch(
-    process.env.NEXT_PUBLIC_BASIC_PATH_URL_LOCAL + "AcionNotas/completar.php",
-    {
-      method: "POST",
-      body: datos,
-    }
-  )
-    .then((res) => res.text())
-    .then((res) => console.log(res))
-    .catch((e) => console.log(e));
+export const completarNota = async (nota, fecha) => {
+  const isVerified = await verifyToken()
+  if(isVerified.isLogged){
+    const datos = new FormData();
+    datos.append("id", nota.id);
+    datos.append("completada", nota.completada);
+    datos.append("fecha", fecha);
+    datos.append("auth-token", getUID());
+    fetch(
+      process.env.NEXT_PUBLIC_BASIC_PATH_URL_LOCAL + "AcionNotas/completar.php",
+      {
+        method: "POST",
+        body: datos
+      }
+    )
+      .then((res) => res.text())
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
+  }
 };
 
 //   -----------------------------------------------------------------
-
-
 
 export const extraerTextoPagina = async (url, setLoaderText) => {
   try {
@@ -185,7 +205,7 @@ export const extraerTextoPagina = async (url, setLoaderText) => {
     const respuestaFetch = await fetch("/api/webPage/" + url);
     const respuesta = await respuestaFetch.json();
     textArea().innerHTML = transformarTextoHtml(respuesta);
-  } catch(e) {
-    console.log(e)
+  } catch (e) {
+    console.log(e);
   }
 };

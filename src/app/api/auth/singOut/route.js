@@ -1,11 +1,8 @@
+import { cookies } from 'next/headers'
+import { NextResponse } from 'next/server';
 
-import { auth } from "firebase-admin";
-import { cookies, headers } from "next/headers";
-import { NextResponse } from "next/server";
-
-
-// autenticar usuario
-export async function GET(request) {
-  cookies().delete(process.env.COOKIE_SESSION_NAME)
+export async function GET(request, res) {
+  const cookieName = process.env.COOKIE_SESSION_NAME;
+  cookies().delete(cookieName)
   return NextResponse.json({}, { status: 200 });
-} 
+};
