@@ -13,7 +13,7 @@ export const GET = async (req,{params}) => {
         });
         $('style, script, iframe, nav, header, footer, aside, button, select, dialog, noscript, svg, input, textarea').remove();
         $('body *').removeAttr('class').removeAttr('style').removeAttr('href');
-        let html = $('body').html();
+        let html = $('body').html().replace(/\n/g, "");
         return NextResponse.json(html);
         
     } catch (error) {
