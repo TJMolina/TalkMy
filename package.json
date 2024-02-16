@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ducanh2912/next-pwa": "^9.7.2",
+    "axios": "^1.6.7",
     "cheerio": "^1.0.0-rc.12",
     "cookie": "^0.6.0",
     "encoding": "^0.1.13",
