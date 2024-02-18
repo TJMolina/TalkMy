@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import cheerio from 'cheerio';
 import axios from "axios";
-import he from 'he';
 export const GET = async (req, { params }) => {
     const url = params.url.join('/').replace(/https?:\/\/?/,'https://');
     try {
@@ -18,11 +17,11 @@ export const GET = async (req, { params }) => {
         // Compact HTML and remove unnecessary whitespace
         let html = $('body').html().replace(/\n/g, "");
         
-        return NextResponse.json(he.decode(html));
+        return NextResponse.json(html);
     } catch (error) {
         console.log("error.");
         const op2 = await extraerTextoPagina_op2(url);
-        return NextResponse.json(he.decode(op2) || error);
+        return NextResponse.json(op2 || error);
     }
 }
 
