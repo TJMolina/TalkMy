@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import cheerio from 'cheerio';
 import axios from "axios";
-
+import he from 'he';
 export const GET = async (req, { params }) => {
     const url = params.url.join('/').replace(/https?:\/\/?/,'https://');
     try {
@@ -11,7 +11,6 @@ export const GET = async (req, { params }) => {
             }
         });
         const $ = cheerio.load(response.data);
-        
         // Remove unwanted elements and attributes
         $('style, script, iframe, nav, header, footer, aside, button, select, dialog, noscript, svg, input, textarea').remove();
         $('[class], [style], [href]').removeAttr('class style href');
@@ -19,10 +18,11 @@ export const GET = async (req, { params }) => {
         // Compact HTML and remove unnecessary whitespace
         let html = $('body').html().replace(/\n/g, "").replace(/<p>&nbsp;<\/p>/g, "");
         
-        return NextResponse.json(html);
+        return NextResponse.json(he.decode(html));
     } catch (error) {
+        console.log("error.");
         const op2 = await extraerTextoPagina_op2(url);
-        return NextResponse.json(op2 || error);
+        return NextResponse.json(he.decode(op2) || error);
     }
 }
 
