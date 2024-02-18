@@ -16,7 +16,7 @@ export const GET = async (req, { params }) => {
         $('[class], [style], [href]').removeAttr('class style href');
         
         // Compact HTML and remove unnecessary whitespace
-        let html = $('body').html().replace(/\n/g, "").replace(/<p>&nbsp;<\/p>/g, "");
+        let html = $('body').html().replace(/\n/g, "");
         
         return NextResponse.json(he.decode(html));
     } catch (error) {
