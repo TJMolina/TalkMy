@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import cheerio from 'cheerio';
 import axios from "axios";
+
 export const GET = async (req, { params }) => {
     const url = params.url.join('/').replace(/https?:\/\/?/,'https://');
     try {
@@ -19,11 +20,15 @@ export const GET = async (req, { params }) => {
         
         return NextResponse.json(html);
     } catch (error) {
-        console.log("error.");
-        const op2 = await extraerTextoPagina_op2(url);
-        return NextResponse.json(op2 || error);
+        try {
+            const op2 = await extraerTextoPagina_op2(url);
+            return NextResponse.json(op2); // Devolver un mensaje si se cumple otra condición
+        } catch (error) {
+            return NextResponse.error(new Error("Fallo al obtener el texto.")); // Devolver un error si no se cumple ninguna condición
+        }
     }
 }
+
 
 const extraerTextoPagina_op2 = async (url) => {
     try {
