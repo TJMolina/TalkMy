@@ -2,12 +2,26 @@ import { NextResponse } from "next/server";
 import cheerio from 'cheerio';
 import axios from "axios";
 
+const userAgents = [
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36',
+    // Add more user agents here
+  ];
+  
+  function getRandomUserAgent() {
+    const randomIndex = Math.floor(Math.random() * userAgents.length);
+    return userAgents[randomIndex];
+  }
+
 export const GET = async (req, { params }) => {
     const url = params.url.join('/').replace(/https?:\/\/?/,'https://');
     try {
         const response = await axios.get(url, {
             headers: {
-                'User-Agent': `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/${(Math.random() * (100 - 600) + min).toFixed(2)} (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/${(Math.random() * (100 - 600) + min).toFixed(2)}`
+                'User-Agent': getRandomUserAgent()
             }
         });
         const $ = cheerio.load(response.data);
