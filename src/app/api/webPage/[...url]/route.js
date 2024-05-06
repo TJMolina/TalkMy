@@ -7,7 +7,7 @@ export const GET = async (req, { params }) => {
     try {
         const response = await axios.get(url, {
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36'
+                'User-Agent': `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/${(Math.random() * (100 - 600) + min).toFixed(2)} (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/${(Math.random() * (100 - 600) + min).toFixed(2)}`
             }
         });
         const $ = cheerio.load(response.data);
