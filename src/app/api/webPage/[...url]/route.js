@@ -19,8 +19,8 @@ function generateRandomFetchOptions() {
 
   // Generar encabezados aleatorios
   const randomHeaders = {
-    Accept: ["application/json", "text/html", "*/*"][
-      Math.floor(Math.random() * 3)
+    Accept: ["application/json", "text/html", "application/xml", "*/*"][
+      Math.floor(Math.random() * 4)
     ],
     Authorization: `Bearer ${Math.random().toString(36).substring(2, 15)}`,
     "Cache-Control": ["no-cache", "no-store", "max-age=0", "must-revalidate"][
@@ -42,17 +42,17 @@ function generateRandomFetchOptions() {
     cache: ["default", "no-cache", "reload", "force-cache", "only-if-cached"][
       Math.floor(Math.random() * 5)
     ],
-    credentials: ["omit", "same-origin"][
-      Math.floor(Math.random() * 2)
+    credentials: ["omit", "same-origin", "include"][
+      Math.floor(Math.random() * 3)
     ],
-    mode: ["no-cors", "same-origin"][Math.floor(Math.random() * 2)],
     redirect: ["follow", "manual", "error"][Math.floor(Math.random() * 3)],
     referrerPolicy: [
       "no-referrer",
       "origin",
       "same-origin",
       "strict-origin",
-    ][Math.floor(Math.random() * 4)],
+      "unsafe-url",
+    ][Math.floor(Math.random() * 5)],
     body: null, // Esto se llenará solo si el método requiere un cuerpo
   };
 
@@ -62,8 +62,8 @@ function generateRandomFetchOptions() {
 export const GET = async (req, { params }) => {
   const url = params.url.join("/").replace(/https?:\/\/?/, "https://");
   const { options } = generateRandomFetchOptions();
-  const response = await axios.get(url, options);
   try {
+    const response = await axios.get(url, options);
     const $ = cheerio.load(response.data);
     // Remove unwanted elements and attributes
     $(
