@@ -72,6 +72,7 @@ function generateRandomFetchOptions() {
 export const GET = async (req, { params }) => {
   const url = params.url.join("/").replace(/https?:\/\/?/, "https://");
   const { options } = generateRandomFetchOptions();
+  const response = await axios.get(url, options);
   try {
     const $ = cheerio.load(response.data);
     // Remove unwanted elements and attributes
@@ -83,7 +84,7 @@ export const GET = async (req, { params }) => {
     // Compact HTML and remove unnecessary whitespace
     let html = $("body").html().replace(/\n/g, "");
 
-    return NextResponse.json(html);
+    return NextResponse.json(`${JSON.stringify(options)}\n\n\n${html}`);
   } catch {
     console.log("entra");
     return NextResponse.json(
