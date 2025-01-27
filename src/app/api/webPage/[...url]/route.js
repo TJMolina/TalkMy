@@ -72,26 +72,25 @@ function generateRandomFetchOptions() {
 export const GET = async (req, { params }) => {
   const url = params.url.join("/").replace(/https?:\/\/?/, "https://");
   const { options } = generateRandomFetchOptions();
-  const response = await axios.get(url, options);
-  if(response.status == 200){
-      const $ = cheerio.load(response.data);
-      // Remove unwanted elements and attributes
-      $(
-        "style, script, iframe, nav, header, footer, aside, button, select, dialog, noscript, svg, input, textarea"
-      ).remove();
-      $("[class], [style], [href]").removeAttr("class style href");
-    
-      // Compact HTML and remove unnecessary whitespace
-      let html = $("body").html().replace(/\n/g, "");
-    
-      return NextResponse.json(html);
-  }
-  else {
-      //const op2 = await extraerTextoPagina_op2(url);
-      //return NextResponse.error(new Error("Fallo al obtener el texto.")); // Devolver un error si no se cumple ninguna condición
-      return NextResponse.json(`Fallo al obtener el texto. \n${options.headers["User-Agent"]}`);
-      
-      //return NextResponse.json(op2); // Devolver un mensaje si se cumple otra condición
+  try {
+    const response = await axios.get(url, options);
+
+    const $ = cheerio.load(response.data);
+    // Remove unwanted elements and attributes
+    $(
+      "style, script, iframe, nav, header, footer, aside, button, select, dialog, noscript, svg, input, textarea"
+    ).remove();
+    $("[class], [style], [href]").removeAttr("class style href");
+
+    // Compact HTML and remove unnecessary whitespace
+    let html = $("body").html().replace(/\n/g, "");
+
+    return NextResponse.json(html);
+  } catch {
+    console.log("entra");
+    return NextResponse.json(
+      `<p>Fallo al obtener el texto. \n${options.headers["User-Agent"]}</p>`
+    );
   }
 };
 
