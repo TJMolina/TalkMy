@@ -88,7 +88,9 @@ export const GET = async (req, { params }) => {
   }
   else {
       //const op2 = await extraerTextoPagina_op2(url);
-      return NextResponse.error(new Error("Fallo al obtener el texto.")); // Devolver un error si no se cumple ninguna condición
+      //return NextResponse.error(new Error("Fallo al obtener el texto.")); // Devolver un error si no se cumple ninguna condición
+      return NextResponse.json(`Fallo al obtener el texto. \n${options.headers["User-Agent"]}`);
+      
       //return NextResponse.json(op2); // Devolver un mensaje si se cumple otra condición
   }
 };
