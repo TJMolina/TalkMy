@@ -89,8 +89,11 @@ export const GET = async (req, { params }) => {
   } catch {
     console.log("entra");
     return NextResponse.json(
-      `<p>Fallo al obtener el texto. \n${options.headers["User-Agent"]}</p>`
+      `<p>Fallo al obtener el texto. \n${options}</p>`
     );
+    // return NextResponse.json(
+    //   `<p>Fallo al obtener el texto. \n${options.headers["User-Agent"]}</p>`
+    // );
   }
 };
 
