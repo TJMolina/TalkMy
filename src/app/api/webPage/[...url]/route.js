@@ -19,8 +19,8 @@ function generateRandomFetchOptions() {
 
   // Generar encabezados aleatorios
   const randomHeaders = {
-    Accept: ["application/json", "text/html", "application/xml", "*/*"][
-      Math.floor(Math.random() * 4)
+    Accept: ["application/json", "text/html", "*/*"][
+      Math.floor(Math.random() * 3)
     ],
     Authorization: `Bearer ${Math.random().toString(36).substring(2, 15)}`,
     "Cache-Control": ["no-cache", "no-store", "max-age=0", "must-revalidate"][
@@ -36,33 +36,23 @@ function generateRandomFetchOptions() {
     "X-Custom-Header": Math.random().toString(36).substring(2, 15),
   };
 
-  // Generar parámetros de consulta aleatorios
-  const randomQueryParams = new URLSearchParams({
-    search: Math.random().toString(36).substring(2, 10),
-    page: Math.floor(Math.random() * 100),
-    limit: Math.floor(Math.random() * 50 + 1),
-    sort: ["asc", "desc"][Math.floor(Math.random() * 2)],
-    randomFlag: Math.random() > 0.5 ? "true" : "false",
-  });
-
   // Configuración aleatoria para otras opciones de fetch
   const options = {
     headers: randomHeaders,
     cache: ["default", "no-cache", "reload", "force-cache", "only-if-cached"][
       Math.floor(Math.random() * 5)
     ],
-    credentials: ["omit", "same-origin", "include"][
-      Math.floor(Math.random() * 3)
+    credentials: ["omit", "same-origin"][
+      Math.floor(Math.random() * 2)
     ],
-    mode: ["cors", "no-cors", "same-origin"][Math.floor(Math.random() * 3)],
+    mode: ["no-cors", "same-origin"][Math.floor(Math.random() * 2)],
     redirect: ["follow", "manual", "error"][Math.floor(Math.random() * 3)],
     referrerPolicy: [
       "no-referrer",
       "origin",
       "same-origin",
       "strict-origin",
-      "unsafe-url",
-    ][Math.floor(Math.random() * 5)],
+    ][Math.floor(Math.random() * 4)],
     body: null, // Esto se llenará solo si el método requiere un cuerpo
   };
 
@@ -83,19 +73,11 @@ export const GET = async (req, { params }) => {
 
     // Compact HTML and remove unnecessary whitespace
     let html = $("body").html().replace(/\n/g, "");
-
-    return NextResponse.json(`<p>${JSON.stringify(options)}</p>\n\n\n${html}`);
+    return NextResponse.json(html);
   } catch {
-    console.log("entra");
     return NextResponse.json(
       `<p>Fallo al obtener el texto. \n${JSON.stringify(options)}</p>`
     );
-    // return NextResponse.json(
-    //   `<p>Fallo al obtener el texto. \n${options.toString}</p>`
-    // );
-    // return NextResponse.json(
-    //   `<p>Fallo al obtener el texto. \n${options.headers["User-Agent"]}</p>`
-    // );
   }
 };
 
