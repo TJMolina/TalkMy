@@ -73,8 +73,6 @@ export const GET = async (req, { params }) => {
   const url = params.url.join("/").replace(/https?:\/\/?/, "https://");
   const { options } = generateRandomFetchOptions();
   try {
-    const response = await axios.get(url, options);
-
     const $ = cheerio.load(response.data);
     // Remove unwanted elements and attributes
     $(
@@ -89,8 +87,11 @@ export const GET = async (req, { params }) => {
   } catch {
     console.log("entra");
     return NextResponse.json(
-      `<p>Fallo al obtener el texto. \n${options}</p>`
+      `<p>Fallo al obtener el texto. \n${JSON.stringify(options)}</p>`
     );
+    // return NextResponse.json(
+    //   `<p>Fallo al obtener el texto. \n${options.toString}</p>`
+    // );
     // return NextResponse.json(
     //   `<p>Fallo al obtener el texto. \n${options.headers["User-Agent"]}</p>`
     // );
