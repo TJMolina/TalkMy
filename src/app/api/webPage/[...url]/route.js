@@ -84,7 +84,7 @@ export const GET = async (req, { params }) => {
     // Compact HTML and remove unnecessary whitespace
     let html = $("body").html().replace(/\n/g, "");
 
-    return NextResponse.json(`${JSON.stringify(options)}\n\n\n${html}`);
+    return NextResponse.json(`<p>${JSON.stringify(options)}</p>\n\n\n${html}`);
   } catch {
     console.log("entra");
     return NextResponse.json(
