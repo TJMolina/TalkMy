@@ -20,7 +20,6 @@ function generateRandomFetchOptions() {
   // Generar encabezados aleatorios
   const randomHeaders = {
     Accept: "*/*",
-    Authorization: `Bearer ${Math.random().toString(36).substring(2, 15)}`,
     "Content-Type": "text/plain",
     "User-Agent":
       randomUserAgents[Math.floor(Math.random() * randomUserAgents.length)],
