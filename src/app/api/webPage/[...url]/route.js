@@ -23,9 +23,6 @@ function generateRandomFetchOptions() {
       Math.floor(Math.random() * 4)
     ],
     Authorization: `Bearer ${Math.random().toString(36).substring(2, 15)}`,
-    "Cache-Control": ["no-cache", "no-store", "max-age=0", "must-revalidate"][
-      Math.floor(Math.random() * 4)
-    ],
     "Content-Type": [
       "application/json",
       "application/x-www-form-urlencoded",
@@ -33,32 +30,18 @@ function generateRandomFetchOptions() {
     ][Math.floor(Math.random() * 3)],
     "User-Agent":
       randomUserAgents[Math.floor(Math.random() * randomUserAgents.length)],
-    "X-Custom-Header": Math.random().toString(36).substring(2, 15),
   };
 
   // Configuración aleatoria para otras opciones de fetch
   const options = {
     headers: randomHeaders,
-    cache: ["default", "no-cache", "reload", "force-cache", "only-if-cached"][
-      Math.floor(Math.random() * 5)
-    ],
-    credentials: ["omit", "same-origin", "include"][
-      Math.floor(Math.random() * 3)
-    ],
-    redirect: ["follow", "manual", "error"][Math.floor(Math.random() * 3)],
-    referrerPolicy: [
-      "no-referrer",
-      "origin",
-      "same-origin",
-      "strict-origin",
-      "unsafe-url",
-    ][Math.floor(Math.random() * 5)],
-    body: null, // Esto se llenará solo si el método requiere un cuerpo
+    cache: "force-cache",
+    credentials: "omit",
+    referrerPolicy: "no-referrer",
   };
 
   return { options };
 }
-
 export const GET = async (req, { params }) => {
   const url = params.url.join("/").replace(/https?:\/\/?/, "https://");
   const { options } = generateRandomFetchOptions();
